@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 茶神諭・尋找靈魂茶飲</title>
+    <title>🌿 茶神諭・展場限定 (Cloud Sync)</title>
     <style>
         /* --- 風格設定 --- */
         body { font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; background: linear-gradient(135deg, #1a2a3a 0%, #000000 100%); color: white; min-height: 100vh; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-x: hidden; }
@@ -27,6 +27,7 @@
 
         .btn-start { background: linear-gradient(45deg, #f1c40f, #f3e5ab); color: #2c3e50; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold; width: 100%; box-shadow: 0 0 20px rgba(241, 196, 15, 0.4); transition: 0.3s; margin-top: 5px; }
         .btn-start:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(241, 196, 15, 0.6); }
+        .btn-start:disabled { background: #7f8c8d; cursor: not-allowed; color: #ccc; box-shadow: none; }
 
         /* 動畫與結果 */
         .stage-2 { display: none; }
@@ -46,14 +47,10 @@
         .recommend-label { font-size: 12px; color: #e67e22; display: block; margin-bottom: 5px; font-weight: bold; }
         .recommend-tea { font-size: 22px; font-weight: 800; color: #d35400; }
         
-        /* 修正後的重新開始按鈕 */
         .btn-restart { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); padding: 10px 20px; border-radius: 30px; margin-top: 25px; cursor: pointer; font-size: 14px; transition: 0.3s; width: 100%; }
         .btn-restart:hover { background: rgba(255,255,255,0.1); color: white; border-color: white; }
 
-        /* 管理按鈕 */
-        .admin-footer { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; transition: 0.3s; z-index: 10; }
-        .admin-footer:hover { opacity: 1; }
-        .btn-admin { background: #333; color: #aaa; border: 1px solid #444; padding: 5px 10px; font-size: 10px; border-radius: 4px; cursor: pointer; }
+        .status-msg { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; display: none; z-index: 999; }
 
         @keyframes flipIn { 0% { opacity: 0; transform: rotateY(90deg); } 100% { opacity: 1; transform: rotateY(0deg); } }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
@@ -67,6 +64,7 @@
 
 <div class="bg-circle c1"></div>
 <div class="bg-circle c2"></div>
+<div id="statusMsg" class="status-msg">資料同步中...</div>
 
 <div class="container">
     <div id="stage1" class="stage-1">
@@ -80,7 +78,7 @@
             <label>Email (接收優惠券用 / 選填)</label>
             <input type="email" id="userEmail" placeholder="name@example.com">
             
-            <label>此刻的心境是？</label>
+            <label>此刻的心情是？</label>
             <div class="mood-grid">
                 <div class="mood-btn" onclick="selectMood(this, 'exam')">🎯 考試/升遷</div>
                 <div class="mood-btn" onclick="selectMood(this, 'love')">💕 想談戀愛</div>
@@ -90,7 +88,7 @@
                 <div class="mood-btn" onclick="selectMood(this, 'gift')">🎁 挑選禮物</div>
             </div>
 
-            <button class="btn-start" onclick="startDivination()">🔮 開始占卜</button>
+            <button class="btn-start" id="startBtn" onclick="startDivination()">🔮 開始占卜</button>
         </div>
     </div>
 
@@ -117,46 +115,22 @@
     </div>
 </div>
 
-<div class="admin-footer">
-    <button class="btn-admin" onclick="exportData()">📥 匯出名單</button>
-    <button class="btn-admin" onclick="clearData()" style="color:#c0392b;">🗑️ 清除</button>
-</div>
-
 <script>
+    // ==========================================
+    // ⚠️ 請在此填入「茶神諭專用」的 Apps Script 網址
+    // ==========================================
+    const GOOGLE_ORACLE_URL = "https://script.google.com/macros/s/AKfycbw2PybhhL9VXHlYuFoG4hPHpr6x55eK7kjidDQdmdfHG4hww2ZG3KSRRlLu5q1ydi0R/exec"; 
+    // ==========================================
+
     let selectedMood = '';
     
-    // --- 核心資料庫 ---
     const db = {
-        'exam': {
-            icon: '🏆', title: '包中・順利', color: '#27ae60',
-            tea: '文山包種茶',
-            text: '「包種」即「包中」。清揚的蘭花香氣能幫你理清思緒，這張籤象徵：你的努力不會白費，考試、求職、提案都將一擊必中！'
-        },
-        'love': {
-            icon: '💞', title: '甜蜜・費洛蒙', color: '#e74c3c',
-            tea: '蜜香紅茶',
-            text: '這是被小綠葉蟬「深情一吻」才有的蜜香。象徵你最近魅力值爆表，受過一點傷沒關係，那終將化為生命中最迷人的甜韻。'
-        },
-        'rich': {
-            icon: '💎', title: '攻頂・富足', color: '#f1c40f',
-            tea: '凍頂烏龍',
-            text: '「凍頂」象徵登上頂峰。金黃透亮的茶湯代表財富與底氣。這杯茶告訴你：穩紮穩打，你即將迎來豐收的黃金時刻。'
-        },
-        'tired': {
-            icon: '🔥', title: '溫潤・充電', color: '#d35400',
-            tea: '紅烏龍',
-            text: '你燃燒得太用力了。紅烏龍重發酵的醇厚口感，像暖流一樣能接住疲憊的你。喝杯茶補補氣，休息是為了走更長遠的路。'
-        },
-        'chill': {
-            icon: '☁️', title: '簡單・初心', color: '#3498db',
-            tea: '盒裝茶包組',
-            text: '生活太複雜，你需要的是「簡單」。不用繁瑣的儀式，隨手一泡就是好茶。這張籤提醒你：快樂其實可以很簡單。'
-        },
-        'gift': {
-            icon: '🎁', title: '分享・連結', color: '#9b59b6',
-            tea: '茶山漫遊禮盒',
-            text: '最好的禮物是「體驗」。這不只是一盒茶，這是一趟帶領朋友漫遊茶山的旅程。分享你的品味，就是最珍貴的心意。'
-        }
+        'exam': { icon: '🏆', title: '包中・順利', color: '#27ae60', tea: '文山包種茶', text: '「包種」即「包中」。清揚的蘭花香氣能幫你理清思緒，這張籤象徵：你的努力不會白費，考試、求職、提案都將一擊必中！' },
+        'love': { icon: '💞', title: '甜蜜・費洛蒙', color: '#e74c3c', tea: '蜜香紅茶', text: '這是被小綠葉蟬「深情一吻」才有的蜜香。象徵你最近魅力值爆表，受過一點傷沒關係，那終將化為生命中最迷人的甜韻。' },
+        'rich': { icon: '💎', title: '攻頂・富足', color: '#f1c40f', tea: '凍頂烏龍', text: '「凍頂」象徵登上頂峰。金黃透亮的茶湯代表財富與底氣。這杯茶告訴你：穩紮穩打，你即將迎來豐收的黃金時刻。' },
+        'tired': { icon: '🔥', title: '溫潤・充電', color: '#d35400', tea: '紅烏龍', text: '你燃燒得太用力了。紅烏龍重發酵的醇厚口感，像暖流一樣能接住疲憊的你。喝杯茶補補氣，休息是為了走更長遠的路。' },
+        'chill': { icon: '☁️', title: '簡單・初心', color: '#3498db', tea: '盒裝茶包組', text: '生活太複雜，你需要的是「簡單」。不用繁瑣的儀式，隨手一泡就是好茶。這張籤提醒你：快樂其實可以很簡單。' },
+        'gift': { icon: '🎁', title: '分享・連結', color: '#9b59b6', tea: '茶山漫遊禮盒', text: '最好的禮物是「體驗」。這不只是一盒茶，這是一趟帶領朋友漫遊茶山的旅程。分享你的品味，就是最珍貴的心意。' }
     };
 
     function selectMood(btn, mood) {
@@ -168,14 +142,17 @@
     function startDivination() {
         if (!selectedMood) { alert("請先選擇一個心境！"); return; }
         
+        // 鎖定按鈕防止連點
+        document.getElementById('startBtn').disabled = true;
+
         const name = document.getElementById('userName').value || '有緣人';
         const email = document.getElementById('userEmail').value || '未填寫';
         const result = db[selectedMood];
 
-        // 儲存數據
-        saveData(name, email, selectedMood, result.tea);
+        // --- 1. 觸發背景上傳 (不等待回應，直接進動畫) ---
+        sendToCloud(name, email, selectedMood, result.tea);
 
-        // 動畫切換
+        // --- 2. 切換到動畫 ---
         document.getElementById('stage1').style.display = 'none';
         document.getElementById('stage2').style.display = 'block';
 
@@ -192,55 +169,52 @@
         }, 1500);
     }
 
-    // --- 新增：重置遊戲功能 (不重新整理網頁) ---
     function resetGame() {
-        // 1. 清空變數與輸入
         selectedMood = '';
         document.getElementById('userName').value = '';
         document.getElementById('userEmail').value = '';
-        
-        // 2. 移除按鈕選取狀態
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('startBtn').disabled = false;
         
-        // 3. 切換回第一階段
         document.getElementById('stage3').style.display = 'none';
-        document.getElementById('stage2').style.display = 'none';
         document.getElementById('stage1').style.display = 'block';
     }
 
-    // --- 數據後台 ---
-    function saveData(name, email, mood, tea) {
-        let visitors = JSON.parse(localStorage.getItem('tea_visitors_final')) || [];
-        visitors.push({
-            date: new Date().toLocaleString(),
+    // --- 雲端資料傳送 ---
+    function sendToCloud(name, email, mood, tea) {
+        if(GOOGLE_ORACLE_URL === "您的_GOOGLE_SCRIPT_URL_貼在這裡") {
+            console.warn("未設定 Google Script URL，跳過上傳");
+            return;
+        }
+
+        // 顯示狀態小視窗
+        const status = document.getElementById('statusMsg');
+        status.style.display = 'block';
+        status.innerText = "☁️ 資料同步中...";
+
+        const data = {
             name: name,
             email: email,
             mood: mood,
             result: tea
-        });
-        localStorage.setItem('tea_visitors_final', JSON.stringify(visitors));
-    }
+        };
 
-    function exportData() {
-        let visitors = JSON.parse(localStorage.getItem('tea_visitors_final')) || [];
-        if(visitors.length === 0) { alert("目前還沒有數據喔！"); return; }
-        let csvContent = "\uFEFF時間,姓名,Email,心情,推薦茶品\n";
-        visitors.forEach(row => { csvContent += `${row.date},${row.name},${row.email},${row.mood},${row.result}\n`; });
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", "茶神諭_顧客名單.csv");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-    
-    function clearData() {
-        if(confirm("確定要清除所有數據嗎？")) {
-            localStorage.removeItem('tea_visitors_final');
-            alert("數據已清除！");
-        }
+        fetch(GOOGLE_ORACLE_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            console.log("Uploaded successfully");
+            status.innerText = "✅ 同步完成";
+            setTimeout(() => { status.style.display = 'none'; }, 2000);
+        })
+        .catch(error => {
+            console.error("Upload failed", error);
+            status.innerText = "⚠️ 同步失敗 (請檢查網路)";
+            setTimeout(() => { status.style.display = 'none'; }, 3000);
+        });
     }
 </script>
 
