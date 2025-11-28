@@ -13,29 +13,26 @@
         h1 { font-size: 32px; margin-bottom: 5px; color: #f1c40f; text-shadow: 0 0 15px rgba(241, 196, 15, 0.6); letter-spacing: 3px; font-weight: 900; }
         .subtitle { font-size: 14px; color: #bdc3c7; margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase; }
         
-        /* 輸入區塊 (玻璃擬態) */
+        /* 輸入區塊 */
         .stage-1 { display: block; }
         .input-box { background: rgba(255,255,255,0.05); padding: 30px 25px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         
         label { display: block; text-align: left; margin-bottom: 8px; font-size: 13px; color: #f1c40f; font-weight: bold; letter-spacing: 1px; }
         input[type="text"], input[type="email"] { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; font-size: 15px; margin-bottom: 20px; box-sizing: border-box; transition: 0.3s; }
-        input:focus { outline: none; border-color: #f1c40f; background: rgba(0,0,0,0.5); box-shadow: 0 0 10px rgba(241, 196, 15, 0.2); }
+        input:focus { outline: none; border-color: #f1c40f; background: rgba(0,0,0,0.5); }
 
-        /* 心情按鈕 */
         .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
-        .mood-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ecf0f1; padding: 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 14px; letter-spacing: 1px; }
-        .mood-btn:hover, .mood-btn.active { background: linear-gradient(45deg, #f1c40f, #d35400); color: #000; border-color: transparent; transform: translateY(-2px); font-weight: bold; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); }
+        .mood-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ecf0f1; padding: 12px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .mood-btn:hover, .mood-btn.active { background: linear-gradient(45deg, #f1c40f, #d35400); color: #000; font-weight: bold; box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4); border-color: transparent; }
 
-        .btn-start { background: linear-gradient(to right, #d4af37, #f1c40f); color: #1a2a3a; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: 900; width: 100%; box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); transition: 0.3s; margin-top: 10px; letter-spacing: 2px; }
-        .btn-start:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
-        .btn-start:disabled { background: #555; color: #999; cursor: not-allowed; box-shadow: none; }
-
+        .btn-start { background: linear-gradient(to right, #d4af37, #f1c40f); color: #1a2a3a; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: 900; width: 100%; box-shadow: 0 0 25px rgba(212, 175, 55, 0.5); transition: 0.3s; margin-top: 10px; }
+        
         /* 動畫 */
         .stage-2 { display: none; }
         .loader { width: 60px; height: 60px; border: 3px solid rgba(241, 196, 15, 0.3); border-top: 3px solid #f1c40f; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px auto; }
         .brewing-text { font-size: 16px; color: #f1c40f; letter-spacing: 2px; animation: pulse 1.5s infinite; }
 
-        /* --- ✨ 重點改造：結果卡片 (豪華暗黑版) --- */
+        /* 結果卡片 */
         .stage-3 { display: none; perspective: 1000px; }
         .card { 
             background: linear-gradient(160deg, #1c1c1c 0%, #2a2a2a 100%); 
@@ -46,10 +43,9 @@
             position: relative; 
             animation: flipIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             margin-bottom: 25px; 
-            padding: 5px; /* 內縮做邊框效果 */
+            padding: 5px;
         }
         
-        /* 內部裝飾框線 */
         .card-inner-border {
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 12px;
@@ -75,11 +71,8 @@
             font-size: 28px; 
             font-weight: 900; 
             margin-bottom: 20px; 
-            color: #d4af37; /* 金色 */
+            color: #d4af37; 
             letter-spacing: 2px;
-            background: -webkit-linear-gradient(#f1c40f, #bf953f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         .oracle-text { 
@@ -87,7 +80,6 @@
             color: #ddd; 
             line-height: 1.8; 
             margin-bottom: 30px; 
-            font-style: normal; 
             text-align: justify;
             background: rgba(255,255,255,0.05); 
             padding: 20px; 
@@ -95,7 +87,6 @@
             border-left: 3px solid #d4af37; 
         }
         
-        /* 推薦商品區 */
         .recommend-box { 
             background: linear-gradient(45deg, #d4af37, #aa8323); 
             padding: 15px; 
@@ -107,7 +98,6 @@
         .recommend-tea { font-size: 22px; font-weight: 900; color: #000; letter-spacing: 1px; }
         
         .btn-restart { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); padding: 10px 25px; border-radius: 30px; cursor: pointer; font-size: 14px; transition: 0.3s; letter-spacing: 1px; }
-        .btn-restart:hover { border-color: #fff; color: #fff; }
         
         .status-bar { margin-top: 15px; font-size: 13px; color: #f1c40f; display: none; text-shadow: 0 0 10px black; }
 
@@ -115,7 +105,6 @@
         @keyframes flipIn { 0% { opacity: 0; transform: rotateY(90deg); } 100% { opacity: 1; transform: rotateY(0deg); } }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
         
-        /* 背景裝飾 */
         .bg-glow { position: absolute; width: 100%; height: 100%; top:0; left:0; overflow: hidden; z-index: 0; pointer-events: none; }
         .glow-spot { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; }
     </style>
@@ -131,14 +120,11 @@
     <div id="stage1" class="stage-1">
         <h1>🌿 茶神諭</h1>
         <div class="subtitle">Tea Oracle・靈魂指引</div>
-        
         <div class="input-box">
             <label>您的稱呼 (Name)</label>
             <input type="text" id="userName" placeholder="怎麼稱呼您呢？">
-            
             <label>Email (必填，將寄送神諭卡給您)</label>
             <input type="email" id="userEmail" placeholder="name@example.com">
-            
             <label>此刻的心情是？</label>
             <div class="mood-grid">
                 <div class="mood-btn" onclick="selectMood(this, 'exam')">🎯 考試/升遷</div>
@@ -148,7 +134,6 @@
                 <div class="mood-btn" onclick="selectMood(this, 'chill')">🍃 想要放鬆</div>
                 <div class="mood-btn" onclick="selectMood(this, 'gift')">🎁 挑選禮物</div>
             </div>
-
             <button class="btn-start" id="startBtn" onclick="startDivination()">🔮 開始感應</button>
         </div>
     </div>
@@ -165,7 +150,6 @@
                 <span class="oracle-icon" id="resultIcon"></span>
                 <div class="oracle-title" id="resultTitle"></div>
                 <div class="oracle-text" id="resultText"></div>
-                
                 <div class="recommend-box">
                     <span class="recommend-label">🔮 您的靈魂命定茶</span>
                     <div class="recommend-tea" id="resultTea"></div>
@@ -179,14 +163,10 @@
 </div>
 
 <script>
-    // ==========================================
-    // ⚠️ 您的茶神諭專用 Script 網址
-    // ==========================================
+    // ✅ 您的茶神諭專用 Script 網址
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzn5lfe_q3HWVL1b6Ixgk2O5xLY6AxdSaqo6qG2M4CcPLU7UZzW0j1enmY0Q4jyA5d4Aw/exec"; 
-    // ==========================================
 
     let selectedMood = '';
-    
     const db = {
         'exam': { icon: '🏆', title: '包中・順利', color: '#f1c40f', tea: '文山包種茶', text: '「包種」即「包中」。蘭花香氣能幫你理清思緒，這張籤象徵：你的努力不會白費，考試、求職、提案都將一擊必中！' },
         'love': { icon: '💞', title: '甜蜜・費洛蒙', color: '#ff7675', tea: '蜜香紅茶', text: '被小綠葉蟬「深情一吻」才有的蜜香。象徵你最近魅力值爆表，受過一點傷沒關係，那終將化為最迷人的甜韻。' },
@@ -196,37 +176,58 @@
         'gift': { icon: '🎁', title: '分享・連結', color: '#9b59b6', tea: '茶山漫遊禮盒', text: '最好的禮物是「體驗」。這不只是一盒茶，是一趟帶領朋友漫遊茶山的旅程。分享品味，就是最珍貴的心意。' }
     };
 
-   function captureAndSend(name, email, mood, tea) {
+    function selectMood(btn, mood) {
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedMood = mood;
+    }
+
+    function startDivination() {
+        if (!selectedMood) { alert("請先選擇一個心境！"); return; }
+        const name = document.getElementById('userName').value || '有緣人';
+        const email = document.getElementById('userEmail').value;
+        if(!email || !email.includes("@")) { alert("⚠️ 請填寫正確的 Email，以便接收籤詩卡片！"); return; }
+
+        const result = db[selectedMood];
+        document.getElementById('resultIcon').innerText = result.icon;
+        document.getElementById('resultTitle').innerText = result.title;
+        document.getElementById('resultText').innerHTML = `親愛的 <b>${name}</b>：<br>${result.text}`;
+        document.getElementById('resultTea').innerText = result.tea;
+
+        document.getElementById('stage1').style.display = 'none';
+        document.getElementById('stage2').style.display = 'block';
+
+        setTimeout(() => {
+            document.getElementById('stage2').style.display = 'none';
+            document.getElementById('stage3').style.display = 'block';
+            
+            setTimeout(() => {
+                captureAndSend(name, email, selectedMood, result.tea);
+            }, 800);
+        }, 2000);
+    }
+
+    function captureAndSend(name, email, mood, tea) {
         const cardElement = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
         statusMsg.style.display = 'block';
 
-        if(GOOGLE_SCRIPT_URL.includes("您的")) { 
-            statusMsg.innerText = "⚠️ 測試模式 (未設定 Script)"; return; 
-        }
+        if(GOOGLE_SCRIPT_URL.includes("您的")) { statusMsg.innerText = "⚠️ 測試模式"; return; }
 
-        // 🚀 終極修正：使用 onclone 強制替換背景
+        // 🛠️ 這裡使用了 onclone 來強制替換背景色，解決 Email 圖片透明問題
         html2canvas(cardElement, { 
-            scale: 3, // 提高解析度讓字更清晰
-            backgroundColor: "#1a1a1a", // 設定畫布基底為深黑
+            scale: 3, 
+            backgroundColor: "#1a1a1a",
             useCORS: true,
-            // 👇 這段是關鍵：在截圖當下，把卡片樣式強制改為純色
             onclone: (clonedDoc) => {
                 const clonedCard = clonedDoc.getElementById('resultCard');
-                clonedCard.style.background = "#1a1a1a"; // 強制純黑背景 (不透明)
-                clonedCard.style.backgroundImage = "none"; // 移除漸層
-                clonedCard.style.boxShadow = "none"; // 移除陰影避免邊緣雜訊
+                clonedCard.style.background = "#1a1a1a";
+                clonedCard.style.backgroundImage = "none";
+                clonedCard.style.boxShadow = "none";
             }
         }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
-            
-            const data = {
-                name: name,
-                email: email,
-                mood: mood,
-                result: tea,
-                image: base64Image
-            };
+            const data = { name: name, email: email, mood: mood, result: tea, image: base64Image };
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
@@ -249,6 +250,3 @@
 
 </body>
 </html>
-
-
-
