@@ -196,7 +196,7 @@
         'gift': { icon: '🎁', title: '分享・連結', color: '#9b59b6', tea: '茶山漫遊禮盒', text: '最好的禮物是「體驗」。這不只是一盒茶，是一趟帶領朋友漫遊茶山的旅程。分享品味，就是最珍貴的心意。' }
     };
 
-    function captureAndSend(name, email, mood, tea) {
+   function captureAndSend(name, email, mood, tea) {
         const cardElement = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
         statusMsg.style.display = 'block';
@@ -205,11 +205,18 @@
             statusMsg.innerText = "⚠️ 測試模式 (未設定 Script)"; return; 
         }
 
-        // 🛠️ 修正點：強制指定背景色為深黑 (#1c1c1c)，解決透明問題
+        // 🚀 終極修正：使用 onclone 強制替換背景
         html2canvas(cardElement, { 
-            scale: 2, 
-            backgroundColor: "#1c1c1c", // 強制不透明底色
-            logging: false
+            scale: 3, // 提高解析度讓字更清晰
+            backgroundColor: "#1a1a1a", // 設定畫布基底為深黑
+            useCORS: true,
+            // 👇 這段是關鍵：在截圖當下，把卡片樣式強制改為純色
+            onclone: (clonedDoc) => {
+                const clonedCard = clonedDoc.getElementById('resultCard');
+                clonedCard.style.background = "#1a1a1a"; // 強制純黑背景 (不透明)
+                clonedCard.style.backgroundImage = "none"; // 移除漸層
+                clonedCard.style.boxShadow = "none"; // 移除陰影避免邊緣雜訊
+            }
         }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
             
@@ -242,5 +249,6 @@
 
 </body>
 </html>
+
 
 
