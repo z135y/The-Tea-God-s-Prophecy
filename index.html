@@ -6,57 +6,40 @@
     <title>🌿 茶神諭 (Email Ver.)</title>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        /* --- 風格設定 --- */
+        /* ... (CSS 樣式保持不變，為節省篇幅省略) ... */
         body { font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; background: linear-gradient(135deg, #1a2a3a 0%, #000000 100%); color: white; min-height: 100vh; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow-x: hidden; }
         .container { width: 90%; max-width: 450px; text-align: center; position: relative; z-index: 1; padding-bottom: 50px; }
-        
         h1 { font-size: 28px; margin-bottom: 10px; color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); letter-spacing: 2px; }
         .subtitle { font-size: 14px; color: #aaa; margin-bottom: 25px; letter-spacing: 1px; }
-        
-        /* 輸入區塊 */
         .stage-1 { display: block; }
         .input-box { background: rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
         label { display: block; text-align: left; margin-bottom: 5px; font-size: 14px; color: #ddd; font-weight: bold; }
         input[type="text"], input[type="email"] { width: 100%; padding: 12px; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: white; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; border: 1px solid transparent; transition: 0.3s; }
         input:focus { outline: none; border-color: #f1c40f; background: rgba(255,255,255,0.25); }
-
-        /* 按鈕網格 */
         .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .mood-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #eee; padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .mood-btn:hover, .mood-btn.active { background: #f1c40f; color: #000; border-color: #f1c40f; transform: scale(1.02); font-weight: bold; box-shadow: 0 0 15px rgba(241, 196, 15, 0.3); }
-
         .btn-start { background: linear-gradient(45deg, #f1c40f, #f3e5ab); color: #2c3e50; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold; width: 100%; box-shadow: 0 0 20px rgba(241, 196, 15, 0.4); transition: 0.3s; margin-top: 5px; }
         .btn-start:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(241, 196, 15, 0.6); }
         .btn-start:disabled { background: #7f8c8d; cursor: not-allowed; box-shadow: none; color: #ccc; }
-
-        /* 動畫與結果 */
         .stage-2 { display: none; }
         .loader { width: 80px; height: 80px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #f1c40f; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .brewing-text { font-size: 16px; color: #f1c40f; animation: pulse 1.5s infinite; }
-
         .stage-3 { display: none; perspective: 1000px; }
-        /* 為了截圖漂亮，卡片背景設為純白，文字深色 */
         .card { background: white; color: #333; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; animation: flipIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-bottom: 20px; }
         .card-header { background: #2c3e50; color: #f1c40f; padding: 15px; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
         .card-body { padding: 30px 25px; }
         .oracle-icon { font-size: 60px; margin-bottom: 10px; display: block; }
         .oracle-title { font-size: 24px; font-weight: bold; margin-bottom: 15px; color: #2c3e50; }
         .oracle-text { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 25px; font-style: italic; background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 3px solid #f1c40f; text-align: left; }
-        
         .recommend-box { background: #fffbe6; padding: 15px; border-radius: 10px; border: 1px dashed #f39c12; }
         .recommend-label { font-size: 12px; color: #e67e22; display: block; margin-bottom: 5px; font-weight: bold; }
         .recommend-tea { font-size: 22px; font-weight: 800; color: #d35400; }
-        
         .btn-restart { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 14px; transition: 0.3s; }
-        
-        /* 狀態提示 */
         .status-bar { margin-top: 15px; font-size: 13px; color: #f1c40f; display: none; }
-
         @keyframes flipIn { 0% { opacity: 0; transform: rotateY(90deg); } 100% { opacity: 1; transform: rotateY(0deg); } }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-        
         .bg-circle { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; }
         .c1 { width: 300px; height: 300px; background: #e67e22; top: -100px; left: -100px; opacity: 0.2; }
         .c2 { width: 400px; height: 400px; background: #27ae60; bottom: -150px; right: -100px; opacity: 0.1; }
@@ -71,14 +54,11 @@
     <div id="stage1" class="stage-1">
         <h1>🌿 茶神諭</h1>
         <div class="subtitle">輸入 Email，接收您的靈魂籤詩</div>
-        
         <div class="input-box">
             <label>您的稱呼 (Name)</label>
             <input type="text" id="userName" placeholder="怎麼稱呼您呢？">
-            
             <label>Email (必填，籤詩將寄至此)</label>
             <input type="email" id="userEmail" placeholder="name@example.com">
-            
             <label>此刻的心情是？</label>
             <div class="mood-grid">
                 <div class="mood-btn" onclick="selectMood(this, 'exam')">🎯 考試/升遷</div>
@@ -88,7 +68,6 @@
                 <div class="mood-btn" onclick="selectMood(this, 'chill')">🍃 想要放鬆</div>
                 <div class="mood-btn" onclick="selectMood(this, 'gift')">🎁 挑選禮物</div>
             </div>
-
             <button class="btn-start" id="startBtn" onclick="startDivination()">🔮 開始占卜</button>
         </div>
     </div>
@@ -105,28 +84,21 @@
                 <span class="oracle-icon" id="resultIcon"></span>
                 <div class="oracle-title" id="resultTitle"></div>
                 <div class="oracle-text" id="resultText"></div>
-                
                 <div class="recommend-box">
                     <span class="recommend-label">🔮 您的靈魂命定茶</span>
                     <div class="recommend-tea" id="resultTea"></div>
                 </div>
             </div>
         </div>
-        
         <div id="statusMsg" class="status-bar">🚀 正在製作籤詩並寄送 Email...</div>
         <button class="btn-restart" onclick="location.reload()">🔄 再測一次</button>
     </div>
 </div>
 
 <script>
-    // ==========================================
-    // ✅ 已更新為您的新網址
-    // ==========================================
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzn5lfe_q3HWVL1b6Ixgk2O5xLY6AxdSaqo6qG2M4CcPLU7UZzW0j1enmY0Q4jyA5d4Aw/exec"; 
-    // ==========================================
 
     let selectedMood = '';
-    
     const db = {
         'exam': { icon: '🏆', title: '包中・順利', color: '#27ae60', tea: '文山包種茶', text: '「包種」即「包中」。蘭花香氣能幫你理清思緒，你的努力不會白費，考試、求職、提案都將一擊必中！' },
         'love': { icon: '💞', title: '甜蜜・費洛蒙', color: '#e74c3c', tea: '蜜香紅茶', text: '被小綠葉蟬「深情一吻」才有的蜜香。象徵你最近魅力值爆表，受過一點傷沒關係，那終將化為最迷人的甜韻。' },
@@ -144,17 +116,10 @@
 
     function startDivination() {
         if (!selectedMood) { alert("請先選擇一個心境！"); return; }
-        
         const name = document.getElementById('userName').value || '有緣人';
         const email = document.getElementById('userEmail').value;
+        if(!email || !email.includes("@")) { alert("⚠️ 請填寫正確的 Email，以便接收籤詩卡片！"); return; }
 
-        // 防呆：必須填 Email (因為要寄圖)
-        if(!email || !email.includes("@")) {
-            alert("⚠️ 請填寫正確的 Email，以便接收籤詩卡片！");
-            return;
-        }
-
-        // 填入資料
         const result = db[selectedMood];
         document.getElementById('resultIcon').innerText = result.icon;
         document.getElementById('resultTitle').innerText = result.title;
@@ -163,18 +128,19 @@
         document.getElementById('resultTea').innerText = result.tea;
         document.getElementById('resultTea').style.color = result.color;
 
-        // 切換動畫
         document.getElementById('stage1').style.display = 'none';
         document.getElementById('stage2').style.display = 'block';
 
-        // 等待 1.5 秒後顯示結果並截圖
+        // ⚠️ 修正重點：等待 2 秒（讓動畫跑完）再進行截圖與傳送
         setTimeout(() => {
             document.getElementById('stage2').style.display = 'none';
             document.getElementById('stage3').style.display = 'block';
             
-            // 開始截圖並傳送
-            captureAndSend(name, email, selectedMood, result.tea);
-        }, 1500);
+            // 延遲 500ms 讓 DOM 完全渲染後再截圖
+            setTimeout(() => {
+                captureAndSend(name, email, selectedMood, result.tea);
+            }, 500);
+        }, 2000);
     }
 
     function captureAndSend(name, email, mood, tea) {
@@ -182,23 +148,12 @@
         const statusMsg = document.getElementById('statusMsg');
         statusMsg.style.display = 'block';
 
-        if(GOOGLE_SCRIPT_URL.includes("您的")) { 
-            statusMsg.innerText = "⚠️ 測試模式 (未設定 Script)"; return; 
-        }
+        if(GOOGLE_SCRIPT_URL.includes("您的")) { statusMsg.innerText = "⚠️ 測試模式"; return; }
 
-        // 使用 html2canvas 截圖
-        html2canvas(cardElement, { scale: 2 }).then(canvas => {
+        html2canvas(cardElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
-            
-            const data = {
-                name: name,
-                email: email,
-                mood: mood,
-                result: tea,
-                image: base64Image
-            };
+            const data = { name: name, email: email, mood: mood, result: tea, image: base64Image };
 
-            // 傳送給 Google Script
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
@@ -219,5 +174,4 @@
 </script>
 
 </body>
-
 </html>
