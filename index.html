@@ -240,7 +240,7 @@
         }, 2000);
     }
 
-    function captureAndSend(name, email, mood, tea) {
+   function captureAndSend(name, email, mood, tea) {
         const cardElement = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
         statusMsg.style.display = 'block';
@@ -249,10 +249,10 @@
             statusMsg.innerText = "⚠️ 測試模式 (未設定 Script)"; return; 
         }
 
-        // 使用 html2canvas 截圖，背景設為深色，確保與網頁一致
+        // 🛠️ 修正點：強制指定背景色為深色 (#1c1c1c)，避免變透明
         html2canvas(cardElement, { 
             scale: 2, 
-            backgroundColor: null, // 透明背景，讓 CSS 的漸層生效
+            backgroundColor: "#1c1c1c", 
             useCORS: true 
         }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
@@ -286,3 +286,4 @@
 
 </body>
 </html>
+
