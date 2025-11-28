@@ -196,51 +196,7 @@
         'gift': { icon: '🎁', title: '分享・連結', color: '#9b59b6', tea: '茶山漫遊禮盒', text: '最好的禮物是「體驗」。這不只是一盒茶，是一趟帶領朋友漫遊茶山的旅程。分享品味，就是最珍貴的心意。' }
     };
 
-    function selectMood(btn, mood) {
-        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedMood = mood;
-    }
-
-    function startDivination() {
-        if (!selectedMood) { alert("請先選擇一個心境！"); return; }
-        
-        const name = document.getElementById('userName').value || '有緣人';
-        const email = document.getElementById('userEmail').value;
-
-        // 防呆：必須填 Email
-        if(!email || !email.includes("@")) {
-            alert("⚠️ 請填寫正確的 Email，以便接收籤詩卡片！");
-            return;
-        }
-
-        // 填入資料
-        const result = db[selectedMood];
-        document.getElementById('resultIcon').innerText = result.icon;
-        document.getElementById('resultTitle').innerText = result.title;
-        // 文字調整為白色，避免在深色背景看不見
-        // document.getElementById('resultTitle').style.color = result.color; 
-        document.getElementById('resultText').innerHTML = `親愛的 <b>${name}</b>：<br>${result.text}`;
-        document.getElementById('resultTea').innerText = result.tea;
-        // document.getElementById('resultTea').style.color = result.color; // 保持黑色，因為背景是金色
-
-        // 切換動畫
-        document.getElementById('stage1').style.display = 'none';
-        document.getElementById('stage2').style.display = 'block';
-
-        // 等待 2 秒後顯示結果並截圖
-        setTimeout(() => {
-            document.getElementById('stage2').style.display = 'none';
-            document.getElementById('stage3').style.display = 'block';
-            
-            // 延遲 800ms 讓 DOM 完全渲染後再截圖，避免卡片翻轉還沒結束就拍
-            setTimeout(() => {
-                captureAndSend(name, email, selectedMood, result.tea);
-            }, 800);
-        }, 2000);
-    }
-
-   function captureAndSend(name, email, mood, tea) {
+    function captureAndSend(name, email, mood, tea) {
         const cardElement = document.getElementById('resultCard');
         const statusMsg = document.getElementById('statusMsg');
         statusMsg.style.display = 'block';
@@ -249,11 +205,11 @@
             statusMsg.innerText = "⚠️ 測試模式 (未設定 Script)"; return; 
         }
 
-        // 🛠️ 修正點：強制指定背景色為深色 (#1c1c1c)，避免變透明
+        // 🛠️ 修正點：強制指定背景色為深黑 (#1c1c1c)，解決透明問題
         html2canvas(cardElement, { 
             scale: 2, 
-            backgroundColor: "#1c1c1c", 
-            useCORS: true 
+            backgroundColor: "#1c1c1c", // 強制不透明底色
+            logging: false
         }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
             
@@ -286,4 +242,5 @@
 
 </body>
 </html>
+
 
