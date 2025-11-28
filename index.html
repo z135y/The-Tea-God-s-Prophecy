@@ -163,7 +163,7 @@
 </div>
 
 <script>
-    // ✅ 您的茶神諭專用 Script 網址
+    // ✅ 茶神諭 Script
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzn5lfe_q3HWVL1b6Ixgk2O5xLY6AxdSaqo6qG2M4CcPLU7UZzW0j1enmY0Q4jyA5d4Aw/exec"; 
 
     let selectedMood = '';
@@ -214,20 +214,21 @@
 
         if(GOOGLE_SCRIPT_URL.includes("您的")) { statusMsg.innerText = "⚠️ 測試模式"; return; }
 
-        // 🛠️ 這裡使用了 onclone 來強制替換背景色，解決 Email 圖片透明問題
+        // 🛠️ 終極修復：強制設定背景色，防止透明
         html2canvas(cardElement, { 
             scale: 3, 
-            backgroundColor: "#1a1a1a",
-            useCORS: true,
-            onclone: (clonedDoc) => {
-                const clonedCard = clonedDoc.getElementById('resultCard');
-                clonedCard.style.background = "#1a1a1a";
-                clonedCard.style.backgroundImage = "none";
-                clonedCard.style.boxShadow = "none";
-            }
+            backgroundColor: "#1a1a1a", // <-- 這裡強制設為深黑，解決透明問題
+            useCORS: true
         }).then(canvas => {
             const base64Image = canvas.toDataURL("image/png");
-            const data = { name: name, email: email, mood: mood, result: tea, image: base64Image };
+            
+            const data = {
+                name: name,
+                email: email,
+                mood: mood,
+                result: tea,
+                image: base64Image
+            };
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
