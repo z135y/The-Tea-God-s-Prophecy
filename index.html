@@ -1,65 +1,184 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新年快樂跑馬燈</title>
+    <title>嗜茶人 - 專屬風味占卜</title>
     <style>
-        /* 基礎設定：全黑背景避免反光 */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            height: 100vh;
-            font-family: "Microsoft JhengHei", sans-serif;
-        }
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap');
 
-        /* 跑馬燈容器 */
-        .marquee-container {
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+      :root {
+        --ink-green: #2F3E35;
+        --ink-black: #222222;
+        --tea-gold: #B09B71;
+        --paper-bg: #F4F1EA;
+        --stamp-red: #A93828;
+        --border-gray: rgba(213, 207, 196, 0.6);
+      }
 
-        /* 滾動動畫設定 */
-        .marquee-text {
-            display: inline-block;
-            padding-left: 100%;
-            font-size: 25vh; /* 字體大小依螢幕高度調整 */
-            font-weight: bold;
-            color: #FF69B4; /* 螢光粉紅 */
-            text-shadow: 0 0 20px #FF0000, 0 0 40px #FF69B4; /* 霓虹燈發光效果 */
-            animation: marquee 15s linear infinite;
-        }
+      body { 
+        font-family: 'Noto Serif TC', '微軟正黑體', serif; 
+        background-color: var(--paper-bg);
+        background-image: 
+          url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+          linear-gradient(to right, var(--border-gray) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--border-gray) 1px, transparent 1px);
+        background-size: 100px 100px, 60px 60px, 60px 60px;
+        background-position: center top;
+        color: var(--ink-black);
+        padding: 50px 20px; 
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        overflow-x: hidden;
+        position: relative;
+      }
 
-        /* 關鍵字強調顏色 */
-        .highlight {
-            color: #FFFF00; /* 黃色強調 */
-            text-shadow: 0 0 20px #FFA500;
-        }
-
-        /* 動畫路徑：從右到左 */
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
-        }
+      /* 大自然背景與人物插畫樣式 (與先前版本相同，此處略過冗長 CSS 以保持整潔，您可直接將前一版的樣式複製過來) */
+      /* ... 請貼上您原本的 .leaves-container, .leaf, .tea-master-illustration, .container 等 CSS 樣式 ... */
+      
+      .container {
+        background-color: rgba(253, 252, 248, 0.95);
+        backdrop-filter: blur(8px);
+        max-width: 550px; width: 100%;
+        padding: 50px 40px;
+        position: relative;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--border-gray);
+        z-index: 1;
+      }
+      .stamp {
+        position: absolute; top: 30px; right: 30px;
+        width: 32px; height: 80px;
+        background-color: var(--stamp-red); color: white;
+        font-family: 'Noto Serif TC', serif; font-weight: 900;
+        font-size: 16px; writing-mode: vertical-rl;
+        text-align: center; letter-spacing: 2px;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 2px; opacity: 0.85;
+      }
+      h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
+      .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; }
+      .form-group { margin-bottom: 30px; }
+      label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 15px; color: var(--ink-green); letter-spacing: 1px; }
+      select, input { width: 100%; padding: 8px 5px; box-sizing: border-box; border: none; border-bottom: 1px solid var(--border-gray); border-radius: 0; font-size: 16px; background-color: transparent; color: var(--ink-black); font-family: 'Noto Serif TC', serif; transition: border-color 0.3s ease; appearance: none; }
+      select { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23B09B71%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 5px center; background-size: 10px; }
+      select:focus, input:focus { outline: none; border-bottom: 2px solid var(--ink-green); }
+      button.submit-btn { background-color: var(--ink-green); color: var(--paper-bg); padding: 16px 20px; border: 1px solid var(--ink-green); cursor: pointer; width: 100%; font-size: 18px; font-family: 'Noto Serif TC', serif; letter-spacing: 4px; font-weight: 600; transition: all 0.4s; margin-top: 20px; }
+      button.submit-btn:hover { background-color: transparent; color: var(--ink-green); }
+      #output { margin-top: 30px; color: var(--ink-green); font-weight: bold; text-align: center; padding: 20px; border: 1px dashed var(--tea-gold); background-color: rgba(176, 155, 113, 0.05); display: none; }
+      .audio-controller { position: fixed; bottom: 30px; right: 30px; background-color: var(--paper-bg); border: 1px solid var(--tea-gold); color: var(--ink-green); padding: 12px 18px; border-radius: 40px; font-size: 14px; font-family: 'Noto Serif TC', serif; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; z-index: 10; display: flex; align-items: center; gap: 8px; }
     </style>
-</head>
-<body>
+  </head>
+  <body>
 
-    <div class="marquee-container">
-        <div class="marquee-text">
-            🎊 恭喜發財！紅包拿來...喔不，是我的心都給你了 🧧 
-            祝最漂亮的女友新的一年：
-            <span class="highlight">吃不胖</span>、
-            <span class="highlight">睡得飽</span>、
-            煩惱通通都跑掉！ 🏃‍♀️💨 
-            Happy New Year 🌈 ✨
+    <!-- 在此插入您的 SVG 動態樹葉與人物插畫 -->
+    
+    <button class="audio-controller" id="audioBtn" onclick="toggleAudio()">
+      <span id="audioIcon">🌿</span> <span id="audioText">聆聽茶園微風</span>
+    </button>
+
+    <div class="container">
+      <div class="stamp">嗜茶人</div>
+      <h2>找出適合命定茶</h2>
+      <p class="subtitle">依循日常品飲軌跡，尋得屬於您的那一葉茶香。</p>
+      
+      <form id="teaForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group"><label>一、 您的稱呼：</label><input type="text" name="name" required placeholder="如：王先生 / 李小姐"></div>
+        <div class="form-group"><label>二、 接收結果的電子信箱：</label><input type="email" name="email" required placeholder="example@email.com"></div>
+        <div class="form-group"><label>三、 飲茶時，您偏好何種感官體驗？</label><select name="taste"><option>清爽解渴無負擔</option><option>濃郁夠味有層次</option></select></div>
+        <div class="form-group"><label>四、 日常習慣的茶湯溫度？</label><select name="brew"><option>冰涼冷泡</option><option>溫暖熱泡</option></select></div>
+        <div class="form-group"><label>五、 沖泡茶葉的情境通常為？</label><select name="format"><option>追求快速便利 (茶包)</option><option>享受沖泡儀式 (原葉)</option></select></div>
+        <div class="form-group"><label>六、 關於香氣，您更傾向哪一種？</label><select name="roast"><option>植物原始的自然清新</option><option>帶有烘焙、焦糖的熟香</option></select></div>
+        <div class="form-group"><label>七、 您期盼這杯茶帶來什麼樣的風景？</label>
+          <select name="expectation">
+            <option>清雅幽長的花香風味</option><option>高山雲霧的細緻冷香</option><option>天然醇厚的甘甜蜜香</option><option>日常百搭的解膩良伴</option>
+          </select>
         </div>
+        <button type="submit" id="submitBtn" class="submit-btn">獲取專屬茶款</button>
+      </form>
+      <div id="output"></div>
     </div>
 
-</body>
+    <script>
+      // === 音效播放邏輯 (脫離 iframe 限制，直接運作) ===
+      var music = null; 
+      var isPlaying = false;
+      var audioBtn = document.getElementById("audioBtn");
+      var audioText = document.getElementById("audioText");
+      var audioIcon = document.getElementById("audioIcon");
+
+      function toggleAudio() {
+        if (!music) {
+          // 您 Google 雲端硬碟的音效直連網址
+          music = new Audio("https://drive.google.com/uc?export=download&id=1elUDbgn2JYG5rxde2TorBafnzmyC3XyC");
+          music.loop = true;
+          music.volume = 0.3;
+        }
+
+        if (isPlaying) {
+          music.pause();
+          audioText.innerText = "聆聽茶園微風";
+          audioIcon.innerText = "🌿";
+          isPlaying = false;
+        } else {
+          music.play().then(function() {
+            audioText.innerText = "靜心品茗中";
+            audioIcon.innerText = "🎵";
+            isPlaying = true;
+          }).catch(function(error) {
+            alert("音效播放失敗，請確認檔案權限或網路狀態。");
+          });
+        }
+      }
+
+      // === 表單提交邏輯 (透過 fetch 呼叫 GAS API) ===
+      function handleFormSubmit(event) {
+        event.preventDefault();
+        var submitBtn = document.getElementById('submitBtn');
+        var outputDiv = document.getElementById('output');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "演算中...";
+        outputDiv.style.display = "block";
+        outputDiv.innerHTML = "正在為您進行風味交叉分析，請稍候...";
+        
+        var formObject = {
+          name: event.target.name.value, 
+          email: event.target.email.value,
+          taste: event.target.taste.value, 
+          brew: event.target.brew.value,
+          format: event.target.format.value, 
+          roast: event.target.roast.value,
+          expectation: event.target.expectation.value
+        };
+
+        // 請在此貼上您在第一階段取得的 Google Apps Script 網頁應用程式 URL
+        var API_URL = "YOUR_GAS_API_URL_HERE"; 
+
+        fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8" // 避免觸發複雜的 CORS 預檢
+          },
+          body: JSON.stringify(formObject)
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.status === "success") {
+            outputDiv.innerHTML = data.message;
+            submitBtn.innerText = "占卜已完成";
+          } else {
+            outputDiv.innerHTML = "發生錯誤，請稍後再試。";
+            submitBtn.disabled = false;
+            submitBtn.innerText = "重新獲取專屬茶款";
+          }
+        })
+        .catch(error => {
+          outputDiv.innerHTML = "網路連線異常，請確認後再試。";
+          submitBtn.disabled = false;
+          submitBtn.innerText = "重新獲取專屬茶款";
+        });
+      }
+    </script>
+  </body>
 </html>
