@@ -109,9 +109,17 @@
       var audioIcon = document.getElementById("audioIcon");
 
       function toggleAudio() {
+// 1. 改為讀取同一個資料夾底下的音檔 (相對路徑)，徹底解決防盜鏈與 CORS 問題
+      var music = null;
+      var isPlaying = false;
+      var audioBtn = document.getElementById("audioBtn");
+      var audioText = document.getElementById("audioText");
+      var audioIcon = document.getElementById("audioIcon");
+
+      function toggleAudio() {
         if (!music) {
-          // 您 Google 雲端硬碟的音效直連網址
-          music = new Audio("https://drive.google.com/uc?export=download&id=1elUDbgn2JYG5rxde2TorBafnzmyC3XyC");
+          // 請確認這裡的檔名與您上傳至 GitHub 的檔名完全一致 (區分大小寫)
+          music = new Audio("./wind.mp3"); 
           music.loop = true;
           music.volume = 0.3;
         }
@@ -127,7 +135,7 @@
             audioIcon.innerText = "🎵";
             isPlaying = true;
           }).catch(function(error) {
-            alert("音效播放失敗，請確認檔案權限或網路狀態。");
+            alert("系統提示：音效播放失敗。請確認 GitHub 上是否存在 wind.mp3 檔案。\n錯誤訊息：" + error.message);
           });
         }
       }
