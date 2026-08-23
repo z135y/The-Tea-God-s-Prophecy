@@ -229,6 +229,7 @@
         
         // 1. 取得使用者輸入的值
         var name = event.target.name.value;
+        var emailInput = event.target.email.value;
         var expectation = event.target.expectation.value;
         var roast = event.target.roast.value;
         var taste = event.target.taste.value;
@@ -336,15 +337,61 @@
               ${guideHtml}
             </div>
             
+            <!-- 加入寄信狀態提示 -->
+            <p id="mailStatus" style="color: #888; font-size: 13px; margin-top: 20px;">⏳ 正在將茶單發送至您的信箱...</p>
+            
             <button onclick="location.reload()" class="submit-btn" style="background-color: transparent; color: var(--ink-green); border: 1px solid var(--ink-green); margin-top: 10px;">重新品茗</button>
             
             <div class="manufacturer-info">
               <strong>製造商資訊</strong><br>
               鑫利發茶園<br>
-              品牌：嗜茶人
+              品牌：鑫利發茶園
             </div>
           </div>
         `;
+
+        // 5. 透過 fetch 在背景將資料傳送給 GAS 執行寄信
+        var urlEncodedData = new URLSearchParams({
+          name: name,
+          email: emailInput,
+          taste: taste,
+          brew: brew,
+          format: format,
+          roast: roast,
+          expectation: expectation
+        }).toString();
+
+        var API_URL = "https://script.google.com/macros/s/AKfycbxXAqIpbe-QxKVzD-DcLGIKFKsajcosWtBXNzYDBvJe1g-9AEMz1R5BHR877X4_gPz4Fw/exec"; 
+
+        fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded" 
+          },
+          body: urlEncodedData
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('網路回應異常');
+          }
+          return response.json(); 
+        })
+        .then(data => {
+          var mailStatus = document.getElementById('mailStatus');
+          if(data.status === "success") {
+            mailStatus.innerText = "✅ " + data.message;
+            mailStatus.style.color = "var(--ink-green)";
+          } else {
+            mailStatus.innerText = "❌ 寄信失敗：" + data.message;
+            mailStatus.style.color = "red";
+          }
+        })
+        .catch(error => {
+          var mailStatus = document.getElementById('mailStatus');
+          mailStatus.innerText = "❌ 系統連線異常，無法寄送信件。";
+          mailStatus.style.color = "red";
+          console.error("Fetch 錯誤:", error);
+        });
       }
     </script>
   </body>
