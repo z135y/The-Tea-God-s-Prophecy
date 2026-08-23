@@ -141,7 +141,7 @@
       }
 
       // === 表單提交邏輯 (透過 fetch 呼叫 GAS API) ===
-      function handleFormSubmit(event) {
+function handleFormSubmit(event) {
         event.preventDefault();
         var submitBtn = document.getElementById('submitBtn');
         var outputDiv = document.getElementById('output');
@@ -150,6 +150,7 @@
         outputDiv.style.display = "block";
         outputDiv.innerHTML = "正在為您進行風味交叉分析，請稍候...";
         
+        // 將資料打包為 URL-encoded 格式，這是繞過 GAS CORS 限制的最佳解法
         var formObject = {
           name: event.target.name.value, 
           email: event.target.email.value,
@@ -160,27 +161,43 @@
           expectation: event.target.expectation.value
         };
 
-        // 請在此貼上您在第一階段取得的 Google Apps Script 網頁應用程式 URL
-        var API_URL = "https://script.google.com/macros/s/AKfycbxXAqIpbe-QxKVzD-DcLGIKFKsajcosWtBXNzYDBvJe1g-9AEMz1R5BHR877X4_gPz4Fw/exec"; 
+        // 將物件轉換為表單字串格式 (例如: name=Ian&email=test@test.com)
+        var urlEncodedData = new URLSearchParams(formObject).toString();
+
+        // 貼上您的「網頁應用程式 URL」 (結尾是 /exec)
+        var API_URL = "您的_GAS_API_網址"; 
 
         fetch(API_URL, {
           method: "POST",
           headers: {
-            "Content-Type": "text/plain;charset=utf-8" // 避免觸發複雜的 CORS 預檢
+            // 關鍵修改：告訴伺服器這是傳統的表單提交，就不會觸發嚴格的預檢請求
+            "Content-Type": "application/x-www-form-urlencoded" 
           },
-          body: JSON.stringify(formObject)
+          body: urlEncodedData
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('網路回應異常');
+          }
+          return response.json(); 
+        })
         .then(data => {
           if(data.status === "success") {
             outputDiv.innerHTML = data.message;
             submitBtn.innerText = "占卜已完成";
           } else {
-            outputDiv.innerHTML = "發生錯誤，請稍後再試。";
+            outputDiv.innerHTML = "發生錯誤：" + data.message;
             submitBtn.disabled = false;
             submitBtn.innerText = "重新獲取專屬茶款";
           }
         })
+        .catch(error => {
+          outputDiv.innerHTML = "網路連線或跨網域存取異常。請確認控制台錯誤。";
+          console.error("Fetch 錯誤:", error);
+          submitBtn.disabled = false;
+          submitBtn.innerText = "重新獲取專屬茶款";
+        });
+      }
         .catch(error => {
           outputDiv.innerHTML = "網路連線異常，請確認後再試。";
           submitBtn.disabled = false;
