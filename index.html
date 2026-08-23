@@ -8,30 +8,19 @@
       @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap');
       
       :root { 
-        --ink-green: #2F3E35; 
-        --ink-black: #222222; 
-        --tea-gold: #B09B71; 
-        --paper-bg: #F4F1EA; 
-        --stamp-red: #A93828; 
-        --border-gray: rgba(213, 207, 196, 0.6); 
+        --ink-green: #2F3E35; --ink-black: #222222; --tea-gold: #B09B71; 
+        --paper-bg: #F4F1EA; --stamp-red: #A93828; --border-gray: rgba(213, 207, 196, 0.6); 
       }
       
       body { 
-        font-family: 'Noto Serif TC', '微軟正黑體', serif; 
-        background-color: var(--paper-bg); 
+        font-family: 'Noto Serif TC', '微軟正黑體', serif; background-color: var(--paper-bg); 
         background-image: 
           url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"), 
           linear-gradient(to right, var(--border-gray) 1px, transparent 1px), 
           linear-gradient(to bottom, var(--border-gray) 1px, transparent 1px); 
-        background-size: 100px 100px, 60px 60px, 60px 60px; 
-        background-position: center top; 
-        color: var(--ink-black); 
-        padding: 50px 20px; 
-        margin: 0; 
-        display: flex; 
-        justify-content: center; 
-        overflow-x: hidden; 
-        position: relative; 
+        background-size: 100px 100px, 60px 60px, 60px 60px; background-position: center top; 
+        color: var(--ink-black); padding: 50px 20px; margin: 0; 
+        display: flex; justify-content: center; overflow-x: hidden; position: relative; 
       }
       
       .leaves-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
@@ -53,45 +42,34 @@
       @keyframes pour { 0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; } }
       @keyframes steam-rise { 0% { transform: translateY(0) scale(0.8); opacity: 0; } 50% { opacity: 0.6; } 100% { transform: translateY(-20px) scale(1.2); opacity: 0; } }
       .water-stream { stroke-dasharray: 6 4; animation: pour 0.8s linear infinite; } 
-      .steam-wave { animation: steam-rise 3s ease-in-out infinite; transform-origin: center bottom; } 
-      .steam-wave:nth-child(2) { animation-delay: 1.5s; }
+      .steam-wave { animation: steam-rise 3s ease-in-out infinite; transform-origin: center bottom; } .steam-wave:nth-child(2) { animation-delay: 1.5s; }
       
       .container { 
-        background-color: rgba(253, 252, 248, 0.95); 
-        backdrop-filter: blur(8px); 
-        max-width: 550px; width: 100%; 
-        padding: 50px 40px; 
-        position: relative; 
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); 
-        border: 1px solid var(--border-gray); 
-        z-index: 1; 
+        background-color: rgba(253, 252, 248, 0.95); backdrop-filter: blur(8px); 
+        max-width: 550px; width: 100%; padding: 50px 40px; position: relative; 
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); border: 1px solid var(--border-gray); z-index: 1; 
       }
       .container::before, .container::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1px solid var(--tea-gold); } 
       .container::before { top: 15px; left: 15px; border-right: none; border-bottom: none; } 
       .container::after { bottom: 15px; right: 15px; border-left: none; border-top: none; }
       
       .stamp { 
-        position: absolute; top: 30px; right: 30px; 
-        width: 32px; height: 80px; 
-        background-color: var(--stamp-red); color: white; 
-        font-family: 'Noto Serif TC', serif; font-weight: 900; 
-        font-size: 16px; writing-mode: vertical-rl; 
-        text-align: center; letter-spacing: 2px; 
-        display: flex; align-items: center; justify-content: center; 
+        position: absolute; top: 30px; right: 30px; width: 32px; height: 80px; 
+        background-color: var(--stamp-red); color: white; font-family: 'Noto Serif TC', serif; 
+        font-weight: 900; font-size: 16px; writing-mode: vertical-rl; text-align: center; 
+        letter-spacing: 2px; display: flex; align-items: center; justify-content: center; 
         border-radius: 2px; opacity: 0.85; 
       }
       
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
-      .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; }
+      .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; transition: 0.3s; }
       
       .form-group { margin-bottom: 30px; }
       label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 15px; color: var(--ink-green); letter-spacing: 1px; }
       select, input { 
-        width: 100%; padding: 8px 5px; box-sizing: border-box; 
-        border: none; border-bottom: 1px solid var(--border-gray); 
-        border-radius: 0; font-size: 16px; 
-        background-color: transparent; color: var(--ink-black); 
-        font-family: 'Noto Serif TC', serif; 
+        width: 100%; padding: 8px 5px; box-sizing: border-box; border: none; 
+        border-bottom: 1px solid var(--border-gray); border-radius: 0; font-size: 16px; 
+        background-color: transparent; color: var(--ink-black); font-family: 'Noto Serif TC', serif; 
         transition: border-color 0.3s ease; appearance: none; 
       }
       select { 
@@ -101,26 +79,21 @@
       select:focus, input:focus { outline: none; border-bottom: 2px solid var(--ink-green); }
       
       button.submit-btn { 
-        background-color: var(--ink-green); color: var(--paper-bg); 
-        padding: 16px 20px; border: 1px solid var(--ink-green); 
-        cursor: pointer; width: 100%; font-size: 18px; 
-        font-family: 'Noto Serif TC', serif; letter-spacing: 4px; 
-        font-weight: 600; transition: all 0.4s; margin-top: 20px; 
+        background-color: var(--ink-green); color: var(--paper-bg); padding: 16px 20px; 
+        border: 1px solid var(--ink-green); cursor: pointer; width: 100%; font-size: 18px; 
+        font-family: 'Noto Serif TC', serif; letter-spacing: 4px; font-weight: 600; 
+        transition: all 0.4s; margin-top: 20px; 
       }
       button.submit-btn:hover { background-color: transparent; color: var(--ink-green); }
       
-      #output { 
-        margin-top: 30px; color: var(--ink-green); font-weight: bold; 
-        text-align: center; padding: 20px; border: 1px dashed var(--tea-gold); 
-        background-color: rgba(176, 155, 113, 0.05); display: none; 
-      }
+      #output { display: none; animation: fadeIn 0.8s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       
       .audio-controller { 
-        position: fixed; bottom: 30px; right: 30px; 
-        background-color: var(--paper-bg); border: 1px solid var(--tea-gold); 
-        color: var(--ink-green); padding: 12px 18px; border-radius: 40px; 
-        font-size: 14px; font-family: 'Noto Serif TC', serif; font-weight: bold; 
-        cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+        position: fixed; bottom: 30px; right: 30px; background-color: var(--paper-bg); 
+        border: 1px solid var(--tea-gold); color: var(--ink-green); padding: 12px 18px; 
+        border-radius: 40px; font-size: 14px; font-family: 'Noto Serif TC', serif; 
+        font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
         transition: all 0.3s ease; z-index: 10; display: flex; align-items: center; gap: 8px; 
       }
       .audio-controller:hover { background-color: var(--ink-green); color: var(--paper-bg); border-color: var(--ink-green); }
@@ -131,12 +104,12 @@
   </head>
   <body>
 
-    <!-- 視覺元素：動態樹葉與年輕司茶人 -->
+    <!-- 大自然樹葉背景 -->
     <div class="leaves-container">
-      <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
-      <div class="leaf"></div><div class="leaf"></div>
+      <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
     </div>
     
+    <!-- 司茶人插圖 -->
     <svg class="tea-master-illustration" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path class="steam-wave" d="M305,210 Q315,180 295,150" stroke="#B09B71" stroke-width="2" stroke-linecap="round"/>
       <path class="steam-wave" d="M325,220 Q340,190 320,160" stroke="#B09B71" stroke-width="1.5" stroke-linecap="round"/>
@@ -158,10 +131,11 @@
     </button>
 
     <div class="container">
-      <div class="stamp">嗜茶人</div>
-      <h2>找出命定茶款</h2>
-      <p class="subtitle">依循日常品飲軌跡，尋得屬於您的那一葉茶香。</p>
+      <div class="stamp" id="stampMarker">嗜茶人</div>
+      <h2 id="mainTitle">找出命定茶款</h2>
+      <p class="subtitle" id="subTitle">依循日常品飲軌跡，尋得屬於您的那一葉茶香。</p>
       
+      <!-- 測驗表單 -->
       <form id="teaForm" onsubmit="handleFormSubmit(event)">
         <div class="form-group"><label>一、 您的稱呼：</label><input type="text" name="name" required placeholder="如：王先生 / 李小姐"></div>
         <div class="form-group"><label>二、 接收結果的電子信箱：</label><input type="email" name="email" required placeholder="example@email.com"></div>
@@ -193,9 +167,10 @@
           </select>
         </div>
         
-        <button type="submit" id="submitBtn" class="submit-btn">獲取專屬茶款</button>
+        <button type="submit" class="submit-btn">獲取專屬茶款</button>
       </form>
       
+      <!-- 結果顯示區塊 (預設隱藏) -->
       <div id="output"></div>
     </div>
 
@@ -224,68 +199,79 @@
             audioIcon.innerText = "🎵";
             isPlaying = true;
           }).catch(function(error) {
-            alert("系統提示：音效播放失敗。請確認 GitHub 上是否存在 wind.mp3 檔案。\n錯誤訊息：" + error.message);
+            alert("系統提示：音效播放失敗。請確認 GitHub 上是否存在 wind.mp3 檔案。");
           });
         }
       }
 
-      // === 表單提交邏輯 ===
+      // === 表單送出與前端畫面渲染邏輯 ===
       function handleFormSubmit(event) {
         event.preventDefault();
         
-        var submitBtn = document.getElementById('submitBtn');
+        var form = document.getElementById('teaForm');
         var outputDiv = document.getElementById('output');
+        var mainTitle = document.getElementById('mainTitle');
+        var subTitle = document.getElementById('subTitle');
         
-        submitBtn.disabled = true;
-        submitBtn.innerText = "演算中...";
+        // 1. 取得使用者輸入的值
+        var name = event.target.name.value;
+        var expectation = event.target.expectation.value;
+        var roast = event.target.roast.value;
+        var taste = event.target.taste.value;
+        var brew = event.target.brew.value;
+        var format = event.target.format.value;
+        
+        // 2. 執行與後端一致的邏輯判定
+        var teaResult = "";
+        var teaReason = "";
+        
+        if (expectation === "清雅幽長的花香風味") {
+          teaResult = "坪林包種茶";
+          teaReason = "包種茶屬於輕發酵青茶。透過獨特的輕度萎凋工藝，保留並激發天然的揮發性花香物質。茶湯帶有清雅的蘭花香氣，適合追求細緻花香與清新氣息的您。";
+        } else if (expectation === "高山雲霧的細緻冷香" && roast === "植物原始的自然清新") {
+          teaResult = "清香高山烏龍";
+          teaReason = "高山環境日照較短，保留了 L-茶胺酸，降低苦澀。茶湯具獨特「冷礦香」，口感鮮爽甘甜，符合您對純淨風味的期待。";
+        } else if (taste === "清爽解渴無負擔" && brew === "冰涼冷泡") {
+          teaResult = "特色茶枝";
+          teaReason = "茶枝部位咖啡因與單寧酸極低，富含天然游離糖。冷飲沖泡減少苦澀，展現純粹甘甜，是清爽無負擔的最佳選擇。";
+        } else if (expectation === "天然醇厚的甘甜蜜香" || taste === "濃郁夠味有層次") {
+          teaResult = "蜜香紅茶";
+          teaReason = "全發酵工藝帶來厚實醇和口感。受小綠葉蟬叮咬產生的芳樟醇，完美釋放天然蜜香，適合喜愛濃郁層次風味的您。";
+        } else if (roast === "帶有烘焙、焦糖的熟香") {
+          teaResult = "精焙烏龍";
+          teaReason = "經高溫烘焙產生梅納反應，轉化出溫潤的焙火香與焦糖香，茶湯醇厚溫和，適合鍾愛成熟風味的您。";
+        } else {
+          teaResult = "經典清香烏龍";
+          teaReason = "保留豐富兒茶素與植物清新香氣，入喉生津止渴，是日常百搭的絕佳選擇。";
+        }
+
+        // 3. 畫面切換：隱藏表單，顯示結果卡片
+        form.style.display = "none";
+        mainTitle.innerText = name + " 的專屬茶單";
+        subTitle.style.display = "none";
+        
         outputDiv.style.display = "block";
-        outputDiv.innerHTML = "正在為您進行風味交叉分析，請稍候...";
+        outputDiv.innerHTML = `
+          <div style="background-color: #fff; padding: 40px 30px; border: 1px solid var(--border-gray); position: relative; text-align: center;">
+            <h3 style="color: var(--ink-green); font-size: 28px; margin: 10px 0;">${teaResult}</h3>
+            <div style="width: 40px; height: 2px; background-color: var(--tea-gold); margin: 0 auto 20px;"></div>
+            
+            <p style="text-align: justify; line-height: 1.8; color: #444; margin-bottom: 25px; padding: 20px; background-color: rgba(176, 155, 113, 0.05); border-left: 4px solid var(--tea-gold);">
+              ${teaReason}
+            </p>
+            
+            <p style="color: #666; font-size: 15px; margin-bottom: 30px;">推薦情境搭配：<strong>${format}</strong></p>
+            
+            <hr style="border: 0; border-top: 1px dashed var(--border-gray); margin: 30px 0;">
+            
+            <h4 style="color: var(--ink-green); margin-bottom: 20px; font-size: 18px;">👇 專屬沖泡指南 👇</h4>
+            <img src="./guide.png" alt="沖泡指示" style="max-width: 100%; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 35px;">
+            
+            <button onclick="location.reload()" class="submit-btn" style="background-color: transparent; color: var(--ink-green); border: 1px solid var(--ink-green); margin-top: 0;">重新品茗</button>
+          </div>
+        `;
         
-        var formObject = {
-          name: event.target.name.value, 
-          email: event.target.email.value,
-          taste: event.target.taste.value, 
-          brew: event.target.brew.value,
-          format: event.target.format.value, 
-          roast: event.target.roast.value,
-          expectation: event.target.expectation.value
-        };
-
-        // 將資料轉換為 URL-encoded 格式以繞過 CORS 限制
-        var urlEncodedData = new URLSearchParams(formObject).toString();
-        
-        // 【請確認此為您最新的 GAS API 網址】
-        var API_URL = "https://script.google.com/macros/s/AKfycbxXAqIpbe-QxKVzD-DcLGIKFKsajcosWtBXNzYDBvJe1g-9AEMz1R5BHR877X4_gPz4Fw/exec"; 
-
-        fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded" 
-          },
-          body: urlEncodedData
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('網路回應異常');
-          }
-          return response.json(); 
-        })
-        .then(data => {
-          if(data.status === "success") {
-            outputDiv.innerHTML = data.message;
-            submitBtn.innerText = "占卜已完成";
-          } else {
-            outputDiv.innerHTML = "發生錯誤：" + data.message;
-            submitBtn.disabled = false;
-            submitBtn.innerText = "重新獲取專屬茶款";
-          }
-        })
-        .catch(error => {
-          outputDiv.innerHTML = "網路連線或跨網域存取異常。請確認控制台錯誤。";
-          console.error("Fetch 錯誤:", error);
-          submitBtn.disabled = false;
-          submitBtn.innerText = "重新獲取專屬茶款";
-        });
+        // (備註：未來在此處可加回 fetch API 呼叫，以便在背景自動發送信件)
       }
     </script>
   </body>
