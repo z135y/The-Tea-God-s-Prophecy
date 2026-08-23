@@ -115,6 +115,15 @@
       }
       .result-card-container img:hover { transform: translateY(-5px); }
       
+      /* 下載按鈕樣式 */
+      .download-btn {
+        display: inline-block; margin-top: 15px; padding: 10px 20px; 
+        background-color: var(--tea-gold); color: #fff; text-decoration: none; 
+        border-radius: 4px; font-size: 15px; letter-spacing: 2px; 
+        transition: 0.3s; box-shadow: 0 4px 10px rgba(176, 155, 113, 0.3);
+      }
+      .download-btn:hover { background-color: var(--ink-green); color: #fff; }
+
       /* 製造商資訊樣式 */
       .manufacturer-info {
         text-align: center; color: #666; font-size: 13px; margin-top: 30px; line-height: 1.6;
@@ -343,9 +352,11 @@
             <h3 style="color: var(--ink-green); font-size: 28px; margin: 10px 0;">${teaResult}</h3>
             <div style="width: 40px; height: 2px; background-color: var(--tea-gold); margin: 0 auto 20px;"></div>
             
-            <!-- 動態顯示專屬小卡 -->
+            <!-- 動態顯示專屬小卡與下載按鈕 -->
             <div class="result-card-container">
               <img src="${resultCardUrl}" alt="${teaResult} 專屬卡片" onerror="this.style.display='none'">
+              <br>
+              <a href="${resultCardUrl}" download="${cardImageName}" class="download-btn">📥 下載專屬卡片</a>
             </div>
             
             <p style="text-align: justify; line-height: 1.8; color: #444; margin-bottom: 25px; padding: 20px; background-color: rgba(176, 155, 113, 0.05); border-left: 4px solid var(--tea-gold);">
