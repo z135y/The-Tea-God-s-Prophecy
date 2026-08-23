@@ -98,13 +98,22 @@
       }
       .audio-controller:hover { background-color: var(--ink-green); color: var(--paper-bg); border-color: var(--ink-green); }
 
-      /* 指南文字樣式 */
+      /* 指南文字與卡片樣式 */
       .guide-box {
         text-align: left; background-color: rgba(253, 252, 248, 0.8); border: 1px solid var(--tea-gold); 
         padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 15px; line-height: 1.8;
       }
       .guide-box ul { margin: 10px 0 0; padding-left: 20px; color: #444; }
       .guide-box li { margin-bottom: 8px; }
+      
+      .result-card-container {
+        margin: 20px 0 30px; text-align: center;
+      }
+      .result-card-container img {
+        max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        transition: transform 0.3s ease;
+      }
+      .result-card-container img:hover { transform: translateY(-5px); }
       
       /* 製造商資訊樣式 */
       .manufacturer-info {
@@ -236,28 +245,35 @@
         var brew = event.target.brew.value;
         var format = event.target.format.value;
         
-        // 2. 執行與後端一致的邏輯判定
+        // 2. 執行與後端一致的邏輯判定，並綁定對應的圖片檔名
         var teaResult = "";
         var teaReason = "";
+        var cardImageName = "";
         
         if (expectation === "清雅幽長的花香風味") {
           teaResult = "文山包種茶";
           teaReason = "包種茶屬於輕發酵青茶。透過獨特的輕度萎凋工藝，保留並激發天然的揮發性花香物質。茶湯帶有清雅的蘭花香氣，適合追求細緻花香與清新氣息的您。";
+          cardImageName = "card_baozhong.png";
         } else if (expectation === "高山雲霧的細緻冷香" && roast === "植物原始的自然清新") {
           teaResult = "清香高山烏龍";
           teaReason = "高山環境日照較短，保留了 L-茶胺酸，降低苦澀。茶湯具獨特「冷礦香」，口感鮮爽甘甜，符合您對純淨風味的期待。";
+          cardImageName = "card_highmountain.png";
         } else if (taste === "清爽解渴無負擔" && brew === "冰涼冷泡") {
           teaResult = "特色茶枝";
           teaReason = "茶枝部位咖啡因與單寧酸極低，富含天然游離糖。冷飲沖泡減少苦澀，展現純粹甘甜，是清爽無負擔的最佳選擇。";
+          cardImageName = "card_teastem.png";
         } else if (expectation === "天然醇厚的甘甜蜜香" || taste === "濃郁夠味有層次") {
           teaResult = "蜜香紅茶";
           teaReason = "全發酵工藝帶來厚實醇和口感。受小綠葉蟬叮咬產生的芳樟醇，完美釋放天然蜜香，適合喜愛濃郁層次風味的您。";
+          cardImageName = "card_blacktea.png";
         } else if (roast === "帶有烘焙、焦糖的熟香") {
           teaResult = "精焙烏龍";
           teaReason = "經高溫烘焙產生梅納反應，轉化出溫潤的焙火香與焦糖香，茶湯醇厚溫和，適合鍾愛成熟風味的您。";
+          cardImageName = "card_roastedoolong.png";
         } else {
           teaResult = "經典清香烏龍";
           teaReason = "保留豐富兒茶素與植物清新香氣，入喉生津止渴，是日常百搭的絕佳選擇。";
+          cardImageName = "card_oolong.png";
         }
 
         // 3. 動態產生職人級沖泡指示
@@ -313,7 +329,10 @@
           }
         }
 
-        // 4. 畫面切換：隱藏表單，顯示結果卡片
+        // 動態生成專屬結果卡的網址 (以當前目錄為準)
+        var resultCardUrl = "./" + cardImageName;
+
+        // 4. 畫面切換：隱藏表單，顯示結果卡片與專屬圖片
         form.style.display = "none";
         mainTitle.innerText = name + " 的專屬茶單";
         subTitle.style.display = "none";
@@ -323,6 +342,11 @@
           <div style="background-color: #fff; padding: 40px 30px; border: 1px solid var(--border-gray); position: relative; text-align: center;">
             <h3 style="color: var(--ink-green); font-size: 28px; margin: 10px 0;">${teaResult}</h3>
             <div style="width: 40px; height: 2px; background-color: var(--tea-gold); margin: 0 auto 20px;"></div>
+            
+            <!-- 動態顯示專屬小卡 -->
+            <div class="result-card-container">
+              <img src="${resultCardUrl}" alt="${teaResult} 專屬卡片" onerror="this.style.display='none'">
+            </div>
             
             <p style="text-align: justify; line-height: 1.8; color: #444; margin-bottom: 25px; padding: 20px; background-color: rgba(176, 155, 113, 0.05); border-left: 4px solid var(--tea-gold);">
               ${teaReason}
@@ -345,7 +369,7 @@
             <div class="manufacturer-info">
               <strong>製造商資訊</strong><br>
               鑫利發茶園<br>
-              品牌：鑫利發茶園
+              品牌：嗜茶人
             </div>
           </div>
         `;
