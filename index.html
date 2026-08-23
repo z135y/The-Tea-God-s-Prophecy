@@ -240,7 +240,7 @@
         var teaReason = "";
         
         if (expectation === "清雅幽長的花香風味") {
-          teaResult = "坪林包種茶";
+          teaResult = "文山包種茶";
           teaReason = "包種茶屬於輕發酵青茶。透過獨特的輕度萎凋工藝，保留並激發天然的揮發性花香物質。茶湯帶有清雅的蘭花香氣，適合追求細緻花香與清新氣息的您。";
         } else if (expectation === "高山雲霧的細緻冷香" && roast === "植物原始的自然清新") {
           teaResult = "清香高山烏龍";
@@ -259,8 +259,9 @@
           teaReason = "保留豐富兒茶素與植物清新香氣，入喉生津止渴，是日常百搭的絕佳選擇。";
         }
 
-        // 3. 動態產生沖泡指示
+        // 3. 動態產生職人級沖泡指示
         var guideHtml = "";
+        
         if (brew === "冰涼冷泡") {
           guideHtml = `
             <ul>
@@ -269,15 +270,39 @@
               <li><strong>時間：</strong>置於冰箱冷藏 6-8 小時風味最佳。</li>
             </ul>`;
         } else {
-          // 熱泡情境下，依據原葉或茶包給予不同建議
+          // 針對原葉熱泡，套用客製化參數
           if (format === "享受沖泡儀式 (原葉)") {
-            guideHtml = `
-              <ul>
-                <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
-                <li><strong>比例：</strong>茶葉鋪滿壺底一層，約 1g 對應 30ml 水。</li>
-                <li><strong>時間：</strong>首泡 40-50 秒，後續每泡增加 10-15 秒，可回沖 4-6 次。</li>
-              </ul>`;
+            if (teaResult === "文山包種茶") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 95°C 熱水。</li>
+                  <li><strong>比例：</strong>茶水比約 1:50。</li>
+                  <li><strong>時間：</strong>第一泡 30 秒，第二泡 25 秒，第三泡 30 秒。</li>
+                </ul>`;
+            } else if (teaResult === "蜜香紅茶") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 85°C 熱水。</li>
+                  <li><strong>比例：</strong>茶水比約 1:50。</li>
+                  <li><strong>時間：</strong>第一泡 25 秒，第二泡 30 秒，第三泡 25 秒。</li>
+                </ul>`;
+            } else if (teaResult === "清香高山烏龍") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>需使用 100°C 滾水。</li>
+                  <li><strong>比例：</strong>100cc 水量搭配 6-8g 茶葉。</li>
+                  <li><strong>時間：</strong>第一泡 120 秒，後續每次增加 60 秒。</li>
+                </ul>`;
+            } else {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
+                  <li><strong>比例：</strong>茶葉鋪滿壺底一層，約 1g 對應 30ml 水。</li>
+                  <li><strong>時間：</strong>首泡 40-50 秒，後續每泡增加 10-15 秒，可回沖 4-6 次。</li>
+                </ul>`;
+            }
           } else {
+            // 熱泡茶包通用參數
             guideHtml = `
               <ul>
                 <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
