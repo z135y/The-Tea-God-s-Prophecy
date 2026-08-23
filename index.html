@@ -97,6 +97,20 @@
         transition: all 0.3s ease; z-index: 10; display: flex; align-items: center; gap: 8px; 
       }
       .audio-controller:hover { background-color: var(--ink-green); color: var(--paper-bg); border-color: var(--ink-green); }
+
+      /* 指南文字樣式 */
+      .guide-box {
+        text-align: left; background-color: rgba(253, 252, 248, 0.8); border: 1px solid var(--tea-gold); 
+        padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 15px; line-height: 1.8;
+      }
+      .guide-box ul { margin: 10px 0 0; padding-left: 20px; color: #444; }
+      .guide-box li { margin-bottom: 8px; }
+      
+      /* 製造商資訊樣式 */
+      .manufacturer-info {
+        text-align: center; color: #666; font-size: 13px; margin-top: 30px; line-height: 1.6;
+        border-top: 1px dotted var(--border-gray); padding-top: 15px;
+      }
       
       @media (max-width: 900px) { .tea-master-illustration { opacity: 0.15; left: -50px; } }
       @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 70px; font-size: 14px; } }
@@ -245,7 +259,35 @@
           teaReason = "保留豐富兒茶素與植物清新香氣，入喉生津止渴，是日常百搭的絕佳選擇。";
         }
 
-        // 3. 畫面切換：隱藏表單，顯示結果卡片
+        // 3. 動態產生沖泡指示
+        var guideHtml = "";
+        if (brew === "冰涼冷泡") {
+          guideHtml = `
+            <ul>
+              <li><strong>水溫：</strong>常溫水或冷水即可。</li>
+              <li><strong>比例：</strong>1g 茶葉對應 100ml 水。</li>
+              <li><strong>時間：</strong>置於冰箱冷藏 6-8 小時風味最佳。</li>
+            </ul>`;
+        } else {
+          // 熱泡情境下，依據原葉或茶包給予不同建議
+          if (format === "享受沖泡儀式 (原葉)") {
+            guideHtml = `
+              <ul>
+                <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
+                <li><strong>比例：</strong>茶葉鋪滿壺底一層，約 1g 對應 30ml 水。</li>
+                <li><strong>時間：</strong>首泡 40-50 秒，後續每泡增加 10-15 秒，可回沖 4-6 次。</li>
+              </ul>`;
+          } else {
+            guideHtml = `
+              <ul>
+                <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
+                <li><strong>水量：</strong>注入約 250ml - 300ml 熱水。</li>
+                <li><strong>時間：</strong>靜置 3-5 分鐘後將茶包取出，避免久浸苦澀。</li>
+              </ul>`;
+          }
+        }
+
+        // 4. 畫面切換：隱藏表單，顯示結果卡片
         form.style.display = "none";
         mainTitle.innerText = name + " 的專屬茶單";
         subTitle.style.display = "none";
@@ -264,14 +306,20 @@
             
             <hr style="border: 0; border-top: 1px dashed var(--border-gray); margin: 30px 0;">
             
-            <h4 style="color: var(--ink-green); margin-bottom: 20px; font-size: 18px;">👇 專屬沖泡指南 👇</h4>
-            <img src="./guide.png" alt="沖泡指示" style="max-width: 100%; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 35px;">
+            <h4 style="color: var(--ink-green); margin-bottom: 15px; font-size: 18px;">👇 專屬沖泡指南 👇</h4>
+            <div class="guide-box">
+              ${guideHtml}
+            </div>
             
-            <button onclick="location.reload()" class="submit-btn" style="background-color: transparent; color: var(--ink-green); border: 1px solid var(--ink-green); margin-top: 0;">重新品茗</button>
+            <button onclick="location.reload()" class="submit-btn" style="background-color: transparent; color: var(--ink-green); border: 1px solid var(--ink-green); margin-top: 10px;">重新品茗</button>
+            
+            <div class="manufacturer-info">
+              <strong>製造商資訊</strong><br>
+              鑫利發茶園<br>
+              品牌：嗜茶人
+            </div>
           </div>
         `;
-        
-        // (備註：未來在此處可加回 fetch API 呼叫，以便在背景自動發送信件)
       }
     </script>
   </body>
