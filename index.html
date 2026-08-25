@@ -124,6 +124,21 @@
       }
       .download-btn:hover { background-color: var(--ink-green); color: #fff; }
 
+      /* 品牌介紹區塊進階排版樣式 */
+      .brand-intro-box {
+        background-color: rgba(248, 249, 250, 0.85); padding: 25px 20px; border-radius: 6px; 
+        border-top: 4px solid var(--ink-green); text-align: left; margin: 35px 0; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      }
+      .brand-intro-box h4 { 
+        text-align: center; margin-top: 0; margin-bottom: 20px; color: var(--ink-green); 
+        font-size: 18px; letter-spacing: 2px; border-bottom: 1px solid var(--border-gray); padding-bottom: 15px;
+      }
+      .brand-section { margin-bottom: 18px; }
+      .brand-section:last-child { margin-bottom: 0; }
+      .brand-section h5 { margin: 0 0 5px 0; color: var(--tea-gold); font-size: 15px; letter-spacing: 1px; }
+      .brand-section p { margin: 0; color: #444; font-size: 14px; line-height: 1.8; text-align: justify; }
+
       /* 製造商資訊樣式 */
       .manufacturer-info {
         text-align: center; color: #666; font-size: 13px; margin-top: 30px; line-height: 1.6;
@@ -341,7 +356,37 @@
         // 動態生成專屬結果卡的網址 (以當前目錄為準)
         var resultCardUrl = "./" + cardImageName;
 
-        // 4. 畫面切換：隱藏表單，顯示結果卡片與專屬圖片
+        // 4. 動態加入「鑫利發茶園」詳細品牌介紹 (僅針對自家茶品)
+        var brandIntroHtml = "";
+        if (teaResult === "文山包種茶" || teaResult === "蜜香紅茶" || teaResult === "特色茶枝") {
+          brandIntroHtml = `
+            <div class="brand-intro-box">
+              <h4>🌿 鑫利發茶園 (Xin Li Fa Tea Garden)</h4>
+              
+              <div class="brand-section">
+                <h5>【品牌概述】</h5>
+                <p>深耕於新北市坪林區水德里，是一座傳承超過半世紀歷史的在地茶園。茶園秉持「杯杯用心，杯杯精品」的製茶理念，將深厚的製茶技藝融合新世代企業管理與數位化思維，致力於將坪林風土與台灣精品茶推向國內外市場。</p>
+              </div>
+
+              <div class="brand-section">
+                <h5>【核心特色與工藝】</h5>
+                <p>主力生產正統文山包種茶（原葉及茶包）、蜜香紅茶（原葉及茶包）以及各式焙火特色茶款（如焙香茶穗茶包），並專注於茶葉烘焙控溫、發酵化學及茶葉副產物（如茶枝）的風味轉化。同時堅持保存並推廣瀕臨斷代的「傳統紙包茶」古法包裝技術，並落實衛福部食藥署登錄與產品合規檢驗，推動茶產業透明化與現代化轉型。</p>
+              </div>
+
+              <div class="brand-section">
+                <h5>【國際榮譽與賽事】</h5>
+                <p>旗下明星品項「焙香茶穗 (Roasted Cha-Sui)」榮獲 2026 英國 Great Taste Awards 國際美味大賽二星獎（2-STAR）殊榮，製茶工藝與風味品質獲得國際評審高度肯定。</p>
+              </div>
+
+              <div class="brand-section">
+                <h5>【永續發展與社會責任】</h5>
+                <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物「食蟹獴」的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
+              </div>
+            </div>
+          `;
+        }
+
+        // 5. 畫面切換：隱藏表單，顯示結果卡片與專屬圖片
         form.style.display = "none";
         mainTitle.innerText = name + " 的專屬茶單";
         subTitle.style.display = "none";
@@ -371,6 +416,9 @@
             <div class="guide-box">
               ${guideHtml}
             </div>
+
+            <!-- 動態品牌介紹區塊 -->
+            ${brandIntroHtml}
             
             <!-- 加入寄信狀態提示 -->
             <p id="mailStatus" style="color: #888; font-size: 13px; margin-top: 20px;">⏳ 正在將茶單發送至您的信箱...</p>
@@ -385,7 +433,7 @@
           </div>
         `;
 
-        // 5. 透過 fetch 在背景將資料傳送給 GAS 執行寄信
+        // 6. 透過 fetch 在背景將資料傳送給 GAS 執行寄信與資料庫寫入
         var urlEncodedData = new URLSearchParams({
           name: name,
           email: emailInput,
