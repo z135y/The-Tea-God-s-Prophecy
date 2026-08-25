@@ -59,6 +59,19 @@
         font-weight: 900; font-size: 16px; writing-mode: vertical-rl; text-align: center; 
         letter-spacing: 2px; display: flex; align-items: center; justify-content: center; 
         border-radius: 2px; opacity: 0.85; 
+        z-index: 2;
+      }
+      
+      /* --- 新增：品牌 Logo 浮水印 (虛化) --- */
+      .brand-watermark-logo {
+        position: absolute;
+        top: -40px;
+        right: -160px; /* 將圖片往右推出表單外 */
+        width: 320px;
+        opacity: 0.08; /* 虛化效果：調整透明度為 8% */
+        pointer-events: none; /* 確保滑鼠點擊穿透，不干擾表單操作 */
+        z-index: -1; /* 墊在表單元素的最底層 */
+        filter: grayscale(100%); /* 轉為黑白更貼近宣紙浮水印質感 */
       }
       
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
@@ -169,7 +182,11 @@
         border-top: 1px dotted var(--border-gray); padding-top: 15px;
       }
       
-      @media (max-width: 900px) { .tea-master-illustration { opacity: 0.15; left: -50px; } }
+      @media (max-width: 900px) { 
+        .tea-master-illustration { opacity: 0.15; left: -50px; } 
+        /* 手機版將 Logo 縮小並微調位置 */
+        .brand-watermark-logo { right: -50px; width: 200px; top: -10px; opacity: 0.05; }
+      }
       @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 70px; font-size: 14px; } }
     </style>
   </head>
@@ -202,6 +219,9 @@
     </button>
 
     <div class="container">
+      <!-- 虛化的品牌 Logo 浮水印 -->
+      <img src="./brand_logo.png" class="brand-watermark-logo" alt="品牌浮水印">
+      
       <div class="stamp" id="stampMarker">嗜茶人</div>
       <h2 id="mainTitle">找出命定茶款</h2>
       <p class="subtitle" id="subTitle">依循日常品飲軌跡，尋得屬於您的那一葉茶香。</p>
@@ -478,10 +498,10 @@
             
             <!-- 購買與社群連結按鈕群 -->
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
-              <!-- https://myship.7-11.com.tw/general/detail/GM2508294110267 -->
-              <a href="#" target="_blank" class="action-btn">將好茶帶回家</a>
-              <!-- https://www.instagram.com/pingling_tea_eaters/ -->
-              <a href="#" target="_blank" class="action-btn-outline">追蹤嗜茶人IG</a>
+              <!-- 填入您的商城網址 -->
+              <a href="#" target="_blank" class="action-btn">🛒 立即選購此茶款</a>
+              <!-- 填入您的 LINE OA 或 IG 網址 -->
+              <a href="#" target="_blank" class="action-btn-outline">💬 追蹤嗜茶人社群</a>
               
               <!-- 重新測驗 -->
               <button onclick="location.reload()" style="background-color: transparent; color: #888; border: none; font-size: 14px; margin-top: 10px; cursor: pointer; text-decoration: underline; font-family: 'Noto Serif TC', serif;">重新品茗測驗</button>
