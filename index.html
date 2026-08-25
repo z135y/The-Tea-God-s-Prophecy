@@ -78,14 +78,24 @@
       }
       select:focus, input:focus { outline: none; border-bottom: 2px solid var(--ink-green); }
       
-      button.submit-btn { 
+      button.submit-btn, a.action-btn { 
+        display: block; box-sizing: border-box; text-align: center; text-decoration: none;
         background-color: var(--ink-green); color: var(--paper-bg); padding: 16px 20px; 
         border: 1px solid var(--ink-green); cursor: pointer; width: 100%; font-size: 18px; 
         font-family: 'Noto Serif TC', serif; letter-spacing: 4px; font-weight: 600; 
         transition: all 0.4s; margin-top: 20px; 
       }
-      button.submit-btn:hover { background-color: transparent; color: var(--ink-green); }
+      button.submit-btn:hover, a.action-btn:hover { background-color: transparent; color: var(--ink-green); }
       
+      a.action-btn-outline {
+        display: block; box-sizing: border-box; text-align: center; text-decoration: none;
+        background-color: transparent; color: var(--ink-green); padding: 16px 20px; 
+        border: 1px solid var(--ink-green); cursor: pointer; width: 100%; font-size: 16px; 
+        font-family: 'Noto Serif TC', serif; letter-spacing: 2px; font-weight: 600; 
+        transition: all 0.4s; 
+      }
+      a.action-btn-outline:hover { background-color: var(--ink-green); color: var(--paper-bg); }
+
       #output { display: none; animation: fadeIn 0.8s ease-in; }
       @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       
@@ -394,7 +404,7 @@
 
                 <div class="brand-section">
                   <h5>【永續發展與社會責任】</h5>
-                  <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
+                  <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物「食蟹獴」的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
                 </div>
               </div>
             </details>
@@ -464,9 +474,18 @@
             ${brandIntroHtml}
             
             <!-- 加入寄信狀態提示 -->
-            <p id="mailStatus" style="color: #888; font-size: 13px; margin-top: 20px;">⏳ 正在將茶單發送至您的信箱...</p>
+            <p id="mailStatus" style="color: #888; font-size: 13px; margin-top: 20px; margin-bottom: 10px;">⏳ 正在將茶單發送至您的信箱...</p>
             
-            <button onclick="location.reload()" class="submit-btn" style="background-color: transparent; color: var(--ink-green); border: 1px solid var(--ink-green); margin-top: 10px;">重新品茗</button>
+            <!-- 購買與社群連結按鈕群 -->
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
+              <!-- 填入您的商城網址 -->
+              <a href="#" target="_blank" class="action-btn">🛒 立即選購此茶款</a>
+              <!-- 填入您的 LINE OA 或 IG 網址 -->
+              <a href="#" target="_blank" class="action-btn-outline">💬 追蹤嗜茶人社群</a>
+              
+              <!-- 重新測驗 -->
+              <button onclick="location.reload()" style="background-color: transparent; color: #888; border: none; font-size: 14px; margin-top: 10px; cursor: pointer; text-decoration: underline; font-family: 'Noto Serif TC', serif;">重新品茗測驗</button>
+            </div>
             
             <div class="manufacturer-info">
               <strong>製造商資訊</strong><br>
