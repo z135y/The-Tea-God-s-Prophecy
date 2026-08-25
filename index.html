@@ -62,16 +62,16 @@
         z-index: 2;
       }
       
-      /* --- 新增：品牌 Logo 浮水印 (虛化) --- */
+      /* --- 品牌 Logo 浮水印 (虛化) --- */
       .brand-watermark-logo {
         position: absolute;
         top: -40px;
-        right: -160px; /* 將圖片往右推出表單外 */
+        right: -160px;
         width: 320px;
-        opacity: 0.08; /* 虛化效果：調整透明度為 8% */
-        pointer-events: none; /* 確保滑鼠點擊穿透，不干擾表單操作 */
-        z-index: -1; /* 墊在表單元素的最底層 */
-        filter: grayscale(100%); /* 轉為黑白更貼近宣紙浮水印質感 */
+        opacity: 0.08; 
+        pointer-events: none; 
+        z-index: -1; 
+        filter: grayscale(100%); 
       }
       
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
@@ -184,7 +184,6 @@
       
       @media (max-width: 900px) { 
         .tea-master-illustration { opacity: 0.15; left: -50px; } 
-        /* 手機版將 Logo 縮小並微調位置 */
         .brand-watermark-logo { right: -50px; width: 200px; top: -10px; opacity: 0.05; }
       }
       @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 70px; font-size: 14px; } }
@@ -499,9 +498,9 @@
             <!-- 購買與社群連結按鈕群 -->
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
               <!-- 填入您的商城網址 -->
-              <a href="#" target="_blank" class="action-btn">🛒 立即選購此茶款</a>
+              <a href="https://myship.7-11.com.tw/general/detail/GM2508294110267" target="_blank" class="action-btn">🛒 立即選購此茶款</a>
               <!-- 填入您的 LINE OA 或 IG 網址 -->
-              <a href="#" target="_blank" class="action-btn-outline">💬 追蹤嗜茶人社群</a>
+              <a href="https://www.instagram.com/pingling_tea_eaters/" target="_blank" class="action-btn-outline">💬 追蹤嗜茶人社群</a>
               
               <!-- 重新測驗 -->
               <button onclick="location.reload()" style="background-color: transparent; color: #888; border: none; font-size: 14px; margin-top: 10px; cursor: pointer; text-decoration: underline; font-family: 'Noto Serif TC', serif;">重新品茗測驗</button>
