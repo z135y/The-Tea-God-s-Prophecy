@@ -124,16 +124,30 @@
       }
       .download-btn:hover { background-color: var(--ink-green); color: #fff; }
 
-      /* 品牌介紹區塊進階排版樣式 */
-      .brand-intro-box {
-        background-color: rgba(248, 249, 250, 0.85); padding: 25px 20px; border-radius: 6px; 
-        border-top: 4px solid var(--ink-green); text-align: left; margin: 35px 0; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      /* 摺疊選單 (Accordion) 進階樣式 */
+      details.brand-accordion {
+        background-color: rgba(248, 249, 250, 0.85); border-radius: 6px; 
+        border-top: 4px solid var(--ink-green); margin: 35px 0; text-align: left;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;
       }
-      .brand-intro-box h4 { 
-        text-align: center; margin-top: 0; margin-bottom: 20px; color: var(--ink-green); 
-        font-size: 18px; letter-spacing: 2px; border-bottom: 1px solid var(--border-gray); padding-bottom: 15px;
+      details.brand-accordion summary {
+        padding: 18px 20px; font-size: 16px; font-weight: 600; color: var(--ink-green);
+        cursor: pointer; letter-spacing: 1px; outline: none; list-style: none;
+        display: flex; justify-content: space-between; align-items: center;
       }
+      details.brand-accordion summary::-webkit-details-marker { display: none; }
+      details.brand-accordion summary::after {
+        content: '+'; font-size: 24px; font-weight: 400; color: var(--tea-gold);
+        transition: transform 0.3s ease;
+      }
+      details.brand-accordion[open] summary::after { content: '−'; }
+      
+      .brand-accordion-content {
+        padding: 0 20px 25px 20px; border-top: 1px dashed var(--border-gray);
+        margin-top: -5px; padding-top: 20px; animation: slideDown 0.3s ease-out;
+      }
+      @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+      
       .brand-section { margin-bottom: 18px; }
       .brand-section:last-child { margin-bottom: 0; }
       .brand-section h5 { margin: 0 0 5px 0; color: var(--tea-gold); font-size: 15px; letter-spacing: 1px; }
@@ -356,32 +370,62 @@
         // 動態生成專屬結果卡的網址 (以當前目錄為準)
         var resultCardUrl = "./" + cardImageName;
 
-        // 4. 動態加入「鑫利發茶園」詳細品牌介紹 (僅針對自家茶品)
+        // 4. 動態加入「摺疊式 (Accordion)」品牌或茶款介紹
         var brandIntroHtml = "";
         if (teaResult === "文山包種茶" || teaResult === "蜜香紅茶" || teaResult === "特色茶枝") {
           brandIntroHtml = `
-            <div class="brand-intro-box">
-              <h4>🌿 鑫利發茶園 (Xin Li Fa Tea Garden)</h4>
-              
-              <div class="brand-section">
-                <h5>【品牌概述】</h5>
-                <p>深耕於新北市坪林區水德里，是一座傳承超過半世紀歷史的在地茶園。茶園秉持「杯杯用心，杯杯精品」的製茶理念，將深厚的製茶技藝融合新世代企業管理與數位化思維，致力於將坪林風土與台灣精品茶推向國內外市場。</p>
-              </div>
+            <details class="brand-accordion">
+              <summary>🌿 鑫利發茶園 (Xin Li Fa Tea Garden)</summary>
+              <div class="brand-accordion-content">
+                <div class="brand-section">
+                  <h5>【品牌概述】</h5>
+                  <p>深耕於新北市坪林區水德里，是一座傳承超過半世紀歷史的在地茶園。茶園秉持「杯杯用心，杯杯精品」的製茶理念，將深厚的製茶技藝融合新世代企業管理與數位化思維，致力於將坪林風土與台灣精品茶推向國內外市場。</p>
+                </div>
 
-              <div class="brand-section">
-                <h5>【核心特色與工藝】</h5>
-                <p>主力生產正統文山包種茶（原葉及茶包）、蜜香紅茶（原葉及茶包）以及各式焙火特色茶款（如焙香茶穗茶包），並專注於茶葉烘焙控溫、發酵化學及茶葉副產物（如茶枝）的風味轉化。同時堅持保存並推廣瀕臨斷代的「傳統紙包茶」古法包裝技術，並落實衛福部食藥署登錄與產品合規檢驗，推動茶產業透明化與現代化轉型。</p>
-              </div>
+                <div class="brand-section">
+                  <h5>【核心特色與工藝】</h5>
+                  <p>主力生產正統文山包種茶（原葉及茶包）、蜜香紅茶（原葉及茶包）以及各式焙火特色茶款（如焙香茶穗茶包），並專注於茶葉烘焙控溫、發酵化學及茶葉副產物（如茶枝）的風味轉化。同時堅持保存並推廣瀕臨斷代的「傳統紙包茶」古法包裝技術，並落實衛福部食藥署登錄與產品合規檢驗，推動茶產業透明化與現代化轉型。</p>
+                </div>
 
-              <div class="brand-section">
-                <h5>【國際榮譽與賽事】</h5>
-                <p>旗下明星品項「焙香茶穗 (Roasted Cha-Sui)」、「鑫利發紅茶榮獲」 2026、2025 英國 Great Taste Awards 國際美味大賽二星獎（2-STAR）殊榮，製茶工藝與風味品質獲得國際評審高度肯定。</p>              </div>
+                <div class="brand-section">
+                  <h5>【國際榮譽與賽事】</h5>
+                  <p>旗下明星品項「焙香茶穗 (Roasted Cha-Sui)」榮獲 2026 英國 Great Taste Awards 國際美味大賽二星獎（2-STAR）殊榮，製茶工藝與風味品質獲得國際評審高度肯定。</p>
+                </div>
 
-              <div class="brand-section">
-                <h5>【永續發展與社會責任】</h5>
-                <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物「食蟹獴」的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
+                <div class="brand-section">
+                  <h5>【永續發展與社會責任】</h5>
+                  <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物「食蟹獴」的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
+                </div>
               </div>
-            </div>
+            </details>
+          `;
+        } else if (teaResult === "清香高山烏龍") {
+          brandIntroHtml = `
+            <details class="brand-accordion">
+              <summary>🏔️ 台灣高山茶 (Taiwan High Mountain Tea) 概述</summary>
+              <div class="brand-accordion-content">
+                <div class="brand-section">
+                  <h5>【一、高山茶的海拔定義】</h5>
+                  <p>在台灣，「高山茶」指的是種植於海拔 1,000 公尺以上茶園的茶葉。這是一個「產地海拔」的概念，而非特定的茶樹品種。台灣知名的高山茶區包括阿里山（約 1,000~1,600 公尺）、杉林溪（約 1,600~1,800 公尺）以及梨山（約 1,800~2,600 公尺以上）。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【二、高山茶的風味特色】</h5>
+                  <p>高山環境具有低溫、日夜溫差大、午後雲霧繚繞（天然遮光）的特點。這使得茶樹生長緩慢，葉肉變得厚實，並能累積更多的胺基酸（甘甜味）與果膠質，同時降低兒茶素（苦澀味）。<br>因此，高山茶的普遍特色是：茶湯甘甜不苦澀、口感滑順有厚度（果膠感重）、且香氣清新高雅。為了保留這種自然原味，高山茶通常採用「輕發酵、輕烘焙（生茶）」的烏龍茶工藝。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【三、什麼是「高山氣（山頭氣）」？】</h5>
+                  <p>「高山氣」或常說的「山頭氣」，是指茶葉將該產區獨特的風土環境（土壤、微氣候、水質、周圍林相）轉化為茶湯中獨一無二的香氣與滋味。也就是那座山的「專屬身分證」。</p>
+                  <ul style="margin: 5px 0 0 20px; color: #444; font-size: 14px; padding-left: 0;">
+                    <li style="margin-bottom: 3px;"><strong>阿里山茶：</strong> 氣候溫和，山頭氣帶有溫柔清雅的蘭花香。</li>
+                    <li style="margin-bottom: 3px;"><strong>杉林溪茶：</strong> 周遭多杉木林，山頭氣帶有沉穩的木質香（冷杉氣韻）與強烈回甘。</li>
+                    <li style="margin-bottom: 0;"><strong>梨山茶：</strong> 海拔極高且冷，山頭氣帶有極致的冷冽高冷香與類似高山水果的甜味。</li>
+                  </ul>
+                  <p style="margin-top: 5px;">簡單來說，高山氣就是能讓您喝一口茶，就能感受到那座山獨特環境的味道。</p>
+                </div>
+              </div>
+            </details>
           `;
         }
 
@@ -416,7 +460,7 @@
               ${guideHtml}
             </div>
 
-            <!-- 動態品牌介紹區塊 -->
+            <!-- 動態摺疊品牌介紹區塊 -->
             ${brandIntroHtml}
             
             <!-- 加入寄信狀態提示 -->
