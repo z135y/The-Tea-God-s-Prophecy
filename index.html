@@ -62,11 +62,6 @@
         z-index: 2;
       }
       
-      .brand-watermark-logo {
-        position: absolute; top: -40px; right: -160px; width: 320px;
-        opacity: 0.08; pointer-events: none; z-index: -1; filter: grayscale(100%); 
-      }
-      
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
       .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; transition: 0.3s; }
       
@@ -191,7 +186,6 @@
 
       @media (max-width: 900px) { 
         .tea-master-illustration { opacity: 0.15; left: -50px; } 
-        .brand-watermark-logo { right: -50px; width: 200px; top: -10px; opacity: 0.05; }
       }
       @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 95px; font-size: 14px; } }
     </style>
@@ -225,7 +219,6 @@
     </button>
 
     <div class="container">
-      <img src="./brand_logo.png" class="brand-watermark-logo" alt="品牌浮水印">
       
       <div class="stamp" id="stampMarker">創新創業社</div>
       <h2 id="mainTitle">尋找專屬茶韻</h2>
@@ -539,15 +532,15 @@
         if (finalTeaKey === "pouchong") {
           brandIntroHtml = `
             <details class="brand-accordion">
-              <summary>🌿 鑫利發茶園 (Xin Li Fa Tea Garden)</summary>
+              <summary>🌿 創新創業社</summary>
               <div class="brand-accordion-content">
                 <div class="brand-section">
-                  <h5>【品牌概述】</h5>
-                  <p>深耕於新北市坪林區水德里，是一座傳承超過半世紀歷史的在地茶園。致力將深厚製茶技藝融合數位化思維，將坪林風土與台灣精品茶推向市場。</p>
+                  <h5>【社團概述】</h5>
+                  <p>這是一個集結了無數創新點子與創業熱情的社群平台。致力將深厚產業知識融合數位化思維，將在地風土與台灣精品推向市場。</p>
                 </div>
                 <div class="brand-section">
-                  <h5>【永續與客觀認證】</h5>
-                  <p>嚴格控管農藥使用，落實衛福部食藥署登錄與產品合規檢驗，守護在地保育類「食蟹獴」棲地。旗下茶品曾獲英國 Great Taste Awards 國際美味大賽二星獎殊榮。</p>
+                  <h5>【願景與目標】</h5>
+                  <p>為每一個擁有創業夢想的年輕人提供交流、學習與合作的機會，攜手發掘台灣各個角落的美好故事與產品。</p>
                 </div>
               </div>
             </details>
