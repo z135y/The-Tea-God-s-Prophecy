@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>創新創業社 - 專屬風味占卜</title>
+    <title>嗜茶人 - 專屬風味占卜</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap');
       
@@ -54,7 +54,7 @@
       .container::after { bottom: 15px; right: 15px; border-left: none; border-top: none; }
       
       .stamp { 
-        position: absolute; top: 30px; right: 30px; width: 32px; height: 110px; 
+        position: absolute; top: 30px; right: 30px; width: 32px; height: 80px; 
         background-color: var(--stamp-red); color: white; font-family: 'Noto Serif TC', serif; 
         font-weight: 900; font-size: 16px; writing-mode: vertical-rl; text-align: center; 
         letter-spacing: 2px; display: flex; align-items: center; justify-content: center; 
@@ -62,51 +62,34 @@
         z-index: 2;
       }
       
+      /* --- 品牌 Logo 浮水印 (虛化) --- */
       .brand-watermark-logo {
-        display: none; /* 完全隱藏原本的鑫利發茶園圓形浮水印 */
+        position: absolute;
+        top: -40px;
+        right: -160px;
+        width: 320px;
+        opacity: 0.08; 
+        pointer-events: none; 
+        z-index: -1; 
+        filter: grayscale(100%); 
       }
       
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
       .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; transition: 0.3s; }
       
-      /* UI/UX 優化：步驟與卡片樣式 */
-      .step-container { display: none; animation: slideInUp 0.5s ease-out forwards; }
-      .step-container.active { display: block; }
-      @keyframes slideInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-      
-      .progress-wrapper { width: 100%; height: 6px; background-color: var(--border-gray); margin-bottom: 30px; border-radius: 3px; overflow: hidden; display: none;}
-      .progress-bar { height: 100%; background-color: var(--ink-green); width: 0%; transition: width 0.4s ease; border-radius: 3px;}
-      
-      .form-group { margin-bottom: 30px; text-align: left; }
-      .form-group label { display: block; font-weight: 600; margin-bottom: 15px; font-size: 17px; color: var(--ink-green); letter-spacing: 1px; line-height: 1.4; }
-      
-      input[type="text"], input[type="email"] { 
-        width: 100%; padding: 12px 10px; box-sizing: border-box; border: none; 
+      .form-group { margin-bottom: 30px; }
+      label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 15px; color: var(--ink-green); letter-spacing: 1px; }
+      select, input { 
+        width: 100%; padding: 8px 5px; box-sizing: border-box; border: none; 
         border-bottom: 1px solid var(--border-gray); border-radius: 0; font-size: 16px; 
         background-color: transparent; color: var(--ink-black); font-family: 'Noto Serif TC', serif; 
-        transition: all 0.3s ease; 
+        transition: border-color 0.3s ease; appearance: none; 
       }
-      input:focus { outline: none; border-bottom: 2px solid var(--ink-green); }
-
-      .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-      .options-grid.col-1 { grid-template-columns: 1fr; }
-      
-      .option-card {
-        border: 1px solid var(--border-gray); background-color: rgba(255,255,255,0.7);
-        border-radius: 8px; padding: 20px 15px; cursor: pointer; text-align: center;
-        transition: all 0.25s ease; color: var(--ink-black); font-size: 15px; font-weight: 600; letter-spacing: 1px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-        min-height: 80px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      select { 
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23B09B71%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); 
+        background-repeat: no-repeat; background-position: right 5px center; background-size: 10px; 
       }
-      .option-card:hover { border-color: var(--tea-gold); background-color: rgba(176, 155, 113, 0.1); transform: translateY(-2px); }
-      .option-card.selected { border-color: var(--ink-green); background-color: var(--ink-green); color: var(--paper-bg); box-shadow: 0 4px 12px rgba(47, 62, 53, 0.2); transform: scale(0.98); }
-      
-      .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 15px; }
-      .btn-prev { background: transparent; border: 1px solid var(--border-gray); color: #666; padding: 12px 20px; font-family: inherit; font-size: 16px; cursor: pointer; transition: 0.3s; flex: 1; font-weight: 600; border-radius: 4px; }
-      .btn-prev:hover { background: #eee; }
-      .btn-next { background: var(--ink-green); border: 1px solid var(--ink-green); color: var(--paper-bg); padding: 12px 20px; font-family: inherit; font-size: 16px; cursor: pointer; transition: 0.3s; flex: 2; font-weight: 600; letter-spacing: 2px; border-radius: 4px; }
-      .btn-next:hover { background: transparent; color: var(--ink-green); }
-      .btn-next:disabled { background: #ccc; border-color: #ccc; cursor: not-allowed; color: #fff; }
+      select:focus, input:focus { outline: none; border-bottom: 2px solid var(--ink-green); }
       
       button.submit-btn, a.action-btn { 
         display: block; box-sizing: border-box; text-align: center; text-decoration: none;
@@ -138,6 +121,7 @@
       }
       .audio-controller:hover { background-color: var(--ink-green); color: var(--paper-bg); border-color: var(--ink-green); }
 
+      /* 指南文字與卡片樣式 */
       .guide-box {
         text-align: left; background-color: rgba(253, 252, 248, 0.8); border: 1px solid var(--tea-gold); 
         padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 15px; line-height: 1.8;
@@ -145,13 +129,16 @@
       .guide-box ul { margin: 10px 0 0; padding-left: 20px; color: #444; }
       .guide-box li { margin-bottom: 8px; }
       
-      .result-card-container { margin: 20px 0 30px; text-align: center; }
+      .result-card-container {
+        margin: 20px 0 30px; text-align: center;
+      }
       .result-card-container img {
         max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         transition: transform 0.3s ease;
       }
       .result-card-container img:hover { transform: translateY(-5px); }
       
+      /* 下載按鈕樣式 */
       .download-btn {
         display: inline-block; margin-top: 15px; padding: 10px 20px; 
         background-color: var(--tea-gold); color: #fff; text-decoration: none; 
@@ -160,6 +147,7 @@
       }
       .download-btn:hover { background-color: var(--ink-green); color: #fff; }
 
+      /* 摺疊選單 (Accordion) 進階樣式 */
       details.brand-accordion {
         background-color: rgba(248, 249, 250, 0.85); border-radius: 6px; 
         border-top: 4px solid var(--ink-green); margin: 35px 0; text-align: left;
@@ -188,12 +176,17 @@
       .brand-section h5 { margin: 0 0 5px 0; color: var(--tea-gold); font-size: 15px; letter-spacing: 1px; }
       .brand-section p { margin: 0; color: #444; font-size: 14px; line-height: 1.8; text-align: justify; }
 
+      /* 製造商資訊樣式 */
+      .manufacturer-info {
+        text-align: center; color: #666; font-size: 13px; margin-top: 30px; line-height: 1.6;
+        border-top: 1px dotted var(--border-gray); padding-top: 15px;
+      }
+      
       @media (max-width: 900px) { 
         .tea-master-illustration { opacity: 0.15; left: -50px; } 
-        /* 確保手機版也不會顯示浮水印 */
-        .brand-watermark-logo { display: none; }
+        .brand-watermark-logo { right: -50px; width: 200px; top: -10px; opacity: 0.05; }
       }
-      @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 95px; font-size: 14px; } }
+      @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 70px; font-size: 14px; } }
     </style>
   </head>
   <body>
@@ -225,121 +218,46 @@
     </button>
 
     <div class="container">
-      <!-- 雖然保留了 img 標籤，但透過 CSS 將其隱藏 -->
+      <!-- 虛化的品牌 Logo 浮水印 -->
       <img src="./brand_logo.png" class="brand-watermark-logo" alt="品牌浮水印">
       
-      <div class="stamp" id="stampMarker">創新創業社</div>
-      <h2 id="mainTitle">尋找專屬茶韻</h2>
-      <p class="subtitle" id="subTitle">透過五個簡單的直覺選擇，為此時此刻的您，配對最適合的台灣茶。</p>
+      <div class="stamp" id="stampMarker">嗜茶人</div>
+      <h2 id="mainTitle">找出命定茶款</h2>
+      <p class="subtitle" id="subTitle">依循日常品飲軌跡，尋得屬於您的那一葉茶香。</p>
       
-      <!-- 進度條 -->
-      <div class="progress-wrapper" id="progressWrapper">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      
-      <!-- 測驗表單 (UI/UX 步驟化設計) -->
+      <!-- 測驗表單 -->
       <form id="teaForm" onsubmit="handleFormSubmit(event)">
-        <!-- 隱藏的輸入欄位，供 JS 與 GAS 使用 -->
-        <input type="hidden" name="name" id="val_name">
-        <input type="hidden" name="email" id="val_email">
-        <input type="hidden" name="brew" id="val_brew">
-        <input type="hidden" name="format" id="val_format">
-        <input type="hidden" name="taste" id="val_taste">
-        <input type="hidden" name="roast" id="val_roast">
-        <input type="hidden" name="expectation" id="val_expectation">
-
-        <!-- 步驟 0: 基本資料 -->
-        <div class="step-container active" id="step0">
-          <div class="form-group">
-            <label>請輸入您的稱呼：</label>
-            <input type="text" id="input_name" required placeholder="如：王先生 / 李小姐" oninput="checkStep0()">
-          </div>
-          <div class="form-group">
-            <label>接收結果的電子信箱：</label>
-            <input type="email" id="input_email" required placeholder="example@email.com" oninput="checkStep0()">
-          </div>
-          <button type="button" class="btn-next" id="btnNext0" style="width: 100%;" disabled onclick="goToStep(1)">開始靜心占卜</button>
+        <div class="form-group"><label>一、 您的稱呼：</label><input type="text" name="name" required placeholder="如：王先生 / 李小姐"></div>
+        <div class="form-group"><label>二、 接收結果的電子信箱：</label><input type="email" name="email" required placeholder="example@email.com"></div>
+        
+        <div style="text-align: center; margin: 40px 0;">
+          <span style="display: inline-block; width: 40px; height: 1px; background-color: var(--tea-gold); vertical-align: middle;"></span>
+          <span style="color: var(--tea-gold); margin: 0 10px; font-size: 12px;">尋茶</span>
+          <span style="display: inline-block; width: 40px; height: 1px; background-color: var(--tea-gold); vertical-align: middle;"></span>
         </div>
 
-        <!-- 步驟 1: 季節 -->
-        <div class="step-container" id="step1">
-          <div class="form-group">
-            <label>一、 您出生（或最喜歡）的季節是？</label>
-            <div class="options-grid">
-              <div class="option-card" onclick="selectCard(1, 'brew', 'spring', this)">🌸 萬物復甦的春季</div>
-              <div class="option-card" onclick="selectCard(1, 'brew', 'summer', this)">☀️ 熱情奔放的夏季</div>
-              <div class="option-card" onclick="selectCard(1, 'brew', 'autumn', this)">🍁 涼爽豐收的秋季</div>
-              <div class="option-card" onclick="selectCard(1, 'brew', 'winter', this)">❄️ 靜謐沉潛的冬季</div>
-            </div>
-          </div>
-          <div class="nav-buttons">
-            <button type="button" class="btn-prev" onclick="goToStep(0)">上一步</button>
-          </div>
+        <div class="form-group"><label>三、 飲茶時，您偏好何種感官體驗？</label>
+          <select name="taste"><option>清爽解渴無負擔</option><option>濃郁夠味有層次</option></select>
         </div>
-
-        <!-- 步驟 2: 步調 -->
-        <div class="step-container" id="step2">
-          <div class="form-group">
-            <label>二、 您覺得自己近期的生活步調是？</label>
-            <div class="options-grid col-1">
-              <div class="option-card" onclick="selectCard(2, 'format', 'fast', this)">快節奏、充滿幹勁，但也容易消耗</div>
-              <div class="option-card" onclick="selectCard(2, 'format', 'steady', this)">平穩、按部就班，需要一點變化</div>
-              <div class="option-card" onclick="selectCard(2, 'format', 'tired', this)">緩慢、疲憊，需要沉澱與放鬆</div>
-            </div>
-          </div>
-          <div class="nav-buttons">
-            <button type="button" class="btn-prev" onclick="goToStep(1)">上一步</button>
-          </div>
+        <div class="form-group"><label>四、 日常習慣的茶湯溫度？</label>
+          <select name="brew"><option>冰涼冷泡</option><option>溫暖熱泡</option></select>
         </div>
-
-        <!-- 步驟 3: 自然元素 -->
-        <div class="step-container" id="step3">
-          <div class="form-group">
-            <label>三、 直覺選一個目前最吸引您的自然元素？</label>
-            <div class="options-grid">
-              <div class="option-card" onclick="selectCard(3, 'taste', 'dew', this)">💧 頂層純淨的朝露</div>
-              <div class="option-card" onclick="selectCard(3, 'taste', 'breeze', this)">🍃 茶園微涼的清風</div>
-              <div class="option-card" onclick="selectCard(3, 'taste', 'sunset', this)">🌅 絢爛溫暖的晚霞</div>
-              <div class="option-card" onclick="selectCard(3, 'taste', 'campfire', this)">🔥 深夜安定的營火</div>
-            </div>
-          </div>
-          <div class="nav-buttons">
-            <button type="button" class="btn-prev" onclick="goToStep(2)">上一步</button>
-          </div>
+        <div class="form-group"><label>五、 沖泡茶葉的情境通常為？</label>
+          <select name="format"><option>追求快速便利 (茶包)</option><option>享受沖泡儀式 (原葉)</option></select>
         </div>
-
-        <!-- 步驟 4: 香氣 -->
-        <div class="step-container" id="step4">
-          <div class="form-group">
-            <label>四、 憑直覺，您現在最想聞到的香氣是？</label>
-            <div class="options-grid col-1">
-              <div class="option-card" onclick="selectCard(4, 'roast', 'floral', this)">淡雅清新的蘭桂花香</div>
-              <div class="option-card" onclick="selectCard(4, 'roast', 'fruity', this)">帶有蜂蜜與熟果的甜香</div>
-              <div class="option-card" onclick="selectCard(4, 'roast', 'roasted', this)">經過火候淬鍊的堅果熟香</div>
-              <div class="option-card" onclick="selectCard(4, 'roast', 'mint', this)">獨特且強烈的薄荷肉桂香</div>
-            </div>
-          </div>
-          <div class="nav-buttons">
-            <button type="button" class="btn-prev" onclick="goToStep(3)">上一步</button>
-          </div>
+        <div class="form-group"><label>六、 關於香氣，您更傾向哪一種？</label>
+          <select name="roast"><option>植物原始的自然清新</option><option>帶有烘焙、焦糖的熟香</option></select>
         </div>
-
-        <!-- 步驟 5: 能量 -->
-        <div class="step-container" id="step5">
-          <div class="form-group">
-            <label>五、 您希望接下來為自己注入哪一種能量？</label>
-            <div class="options-grid col-1">
-              <div class="option-card" onclick="selectCard(5, 'expectation', 'relax', this)">平靜與放鬆，洗滌身心</div>
-              <div class="option-card" onclick="selectCard(5, 'expectation', 'clarity', this)">專注與清晰，理清思緒</div>
-              <div class="option-card" onclick="selectCard(5, 'expectation', 'soothe', this)">溫暖與撫慰，安定心神</div>
-              <div class="option-card" onclick="selectCard(5, 'expectation', 'energy', this)">活力與振奮，迎接挑戰</div>
-              <div class="option-card" onclick="selectCard(5, 'expectation', 'stable', this)">踏實與穩定，建立秩序</div>
-            </div>
-          </div>
-          <div class="nav-buttons">
-            <button type="button" class="btn-prev" onclick="goToStep(4)">上一步</button>
-          </div>
+        <div class="form-group"><label>七、 您期盼這杯茶帶來什麼樣的風景？</label>
+          <select name="expectation">
+            <option>清雅幽長的花香風味</option>
+            <option>高山雲霧的細緻冷香</option>
+            <option>天然醇厚的甘甜蜜香</option>
+            <option>日常百搭的解膩良伴</option>
+          </select>
         </div>
+        
+        <button type="submit" class="submit-btn">獲取專屬茶款</button>
       </form>
       
       <!-- 結果顯示區塊 (預設隱藏) -->
@@ -371,63 +289,9 @@
             audioIcon.innerText = "🎵";
             isPlaying = true;
           }).catch(function(error) {
-            alert("系統提示：音效播放失敗。請確認您的裝置或瀏覽器設定允許自動播放。");
+            alert("系統提示：音效播放失敗。請確認 GitHub 上是否存在 wind.mp3 檔案。");
           });
         }
-      }
-
-      // === UI/UX 步驟切換邏輯 ===
-      const totalSteps = 5;
-      let currentStep = 0;
-
-      function checkStep0() {
-        const name = document.getElementById('input_name').value.trim();
-        const email = document.getElementById('input_email').value.trim();
-        const btn = document.getElementById('btnNext0');
-        // 基本 email 格式驗證
-        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        btn.disabled = !(name && emailValid);
-      }
-
-      function goToStep(step) {
-        // 進入步驟 1 時，將使用者輸入的值塞入隱藏欄位，供最後一次性發送
-        if (step === 1 && currentStep === 0) {
-          document.getElementById('val_name').value = document.getElementById('input_name').value;
-          document.getElementById('val_email').value = document.getElementById('input_email').value;
-          document.getElementById('progressWrapper').style.display = 'block';
-        }
-
-        // 隱藏當前畫面並顯示下一個目標畫面
-        document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
-        const nextTarget = document.getElementById('step' + step);
-        if(nextTarget) nextTarget.classList.add('active');
-        
-        currentStep = step;
-        
-        // 更新進度條 (從第 1 題開始計算進度)
-        const progress = step > 0 ? (step / totalSteps) * 100 : 0;
-        document.getElementById('progressBar').style.width = progress + '%';
-
-        // 若超過總題數 (使用者在最後一題點擊選項後延遲觸發)，則直接判定並送出
-        if (step > totalSteps) {
-          document.getElementById('progressWrapper').style.display = 'none';
-          handleFormSubmit({ preventDefault: () => {} });
-        }
-      }
-
-      function selectCard(stepNum, fieldId, value, element) {
-        // 將選擇的數值寫入隱藏欄位
-        document.getElementById('val_' + fieldId).value = value;
-        
-        // 處理視覺選中狀態 (移除其他同層卡片的特效)
-        const siblings = element.parentNode.querySelectorAll('.option-card');
-        siblings.forEach(el => el.classList.remove('selected'));
-        element.classList.add('selected');
-        
-        // UX 巧思：選中後短暫延遲 (400毫秒) 再自動翻頁，讓使用者能看清楚自己的選擇
-        setTimeout(() => {
-          goToStep(stepNum + 1);
-        }, 400);
       }
 
       // === 表單送出與前端畫面渲染邏輯 ===
@@ -439,123 +303,162 @@
         var mainTitle = document.getElementById('mainTitle');
         var subTitle = document.getElementById('subTitle');
         
-        // 1. 改為從隱藏欄位取得使用者最終輸入的值
-        var name = document.getElementById('val_name').value;
-        var emailInput = document.getElementById('val_email').value;
-        var expectation = document.getElementById('val_expectation').value; 
-        var roast = document.getElementById('val_roast').value; 
-        var taste = document.getElementById('val_taste').value; 
-        var brew = document.getElementById('val_brew').value; 
-        var format = document.getElementById('val_format').value; 
+        // 1. 取得使用者輸入的值
+        var name = event.target.name.value;
+        var emailInput = event.target.email.value;
+        var expectation = event.target.expectation.value;
+        var roast = event.target.roast.value;
+        var taste = event.target.taste.value;
+        var brew = event.target.brew.value;
+        var format = event.target.format.value;
         
-        // 2. 占卜計分邏輯 (客觀對應)
-        var scores = { pouchong: 0, oriental: 0, dongding: 0, ruby: 0, highMountain: 0 };
-        
-        // 核心能量 (權重最高)
-        if(expectation === "relax") scores.pouchong += 3;
-        else if(expectation === "clarity") scores.highMountain += 3;
-        else if(expectation === "soothe") scores.oriental += 3;
-        else if(expectation === "energy") scores.ruby += 3;
-        else if(expectation === "stable") scores.dongding += 3;
-
-        // 渴望香氣 (次要權重)
-        if(roast === "floral") { scores.pouchong += 2; scores.highMountain += 1; }
-        else if(roast === "fruity") scores.oriental += 2;
-        else if(roast === "roasted") scores.dongding += 2;
-        else if(roast === "mint") scores.ruby += 2;
-
-        // 計算最高分的茶款
-        var highestScore = -1;
-        var finalTeaKey = "pouchong";
-        for (var key in scores) {
-          if (scores[key] > highestScore) {
-            highestScore = scores[key];
-            finalTeaKey = key;
-          }
-        }
-
-        // 3. 設定茶款結果與客觀分析 (基於 TTES 資訊)
+        // 2. 執行與後端一致的邏輯判定，並綁定對應的圖片檔名
         var teaResult = "";
         var teaReason = "";
         var cardImageName = "";
-        var guideHtml = "";
-        var brandIntroHtml = "";
         
-        if (finalTeaKey === "pouchong") {
-          teaResult = "文山包種茶 (新北坪林)";
-          teaReason = "根據您的選擇，您目前處於需要放鬆與沉澱的狀態。客觀而言，輕發酵的茶飲保留了較多的茶胺酸，有助於舒緩緊繃神經。坪林出產的文山包種茶帶有清幽的蘭桂花香，茶湯清澈甘甜，非常適合用來洗滌疲憊，讓生活步調歸零。";
+        if (expectation === "清雅幽長的花香風味") {
+          teaResult = "文山包種茶";
+          teaReason = "包種茶屬於輕發酵青茶。透過獨特的輕度萎凋工藝，保留並激發天然的揮發性花香物質。茶湯帶有清雅的蘭花香氣，適合追求細緻花香與清新氣息的您。";
           cardImageName = "card_baozhong.png";
-          guideHtml = `
-            <ul>
-              <li><strong>水溫：</strong>建議 95°C 熱水。</li>
-              <li><strong>比例：</strong>茶水比約 1:50。</li>
-              <li><strong>時間：</strong>第一泡 30 秒，第二泡 25 秒，第三泡 30 秒。</li>
-            </ul>`;
-        } else if (finalTeaKey === "highMountain") {
-          teaResult = "阿里山高山烏龍茶";
-          teaReason = "您渴望在繁雜的日常中理清思緒。高山茶因生長於海拔1000公尺以上，日夜溫差大使得茶湯富含果膠質且帶有獨特「冷冽高山氣」。適度的咖啡因配合清新的香氣，能協助腦部保持清醒與專注，適合需要冷靜思考的您。";
+        } else if (expectation === "高山雲霧的細緻冷香" && roast === "植物原始的自然清新") {
+          teaResult = "清香高山烏龍";
+          teaReason = "高山環境日照較短，保留了 L-茶胺酸，降低苦澀。茶湯具獨特「冷礦香」，口感鮮爽甘甜，符合您對純淨風味的期待。";
           cardImageName = "card_highmountain.png";
-          guideHtml = `
-            <ul>
-              <li><strong>水溫：</strong>需使用 100°C 滾水。</li>
-              <li><strong>比例：</strong>100cc 水量搭配 6-8g 茶葉。</li>
-              <li><strong>時間：</strong>第一泡 120 秒，後續每次增加 60 秒。</li>
-            </ul>`;
-        } else if (finalTeaKey === "oriental") {
-          teaResult = "東方美人茶 (白毫烏龍)";
-          teaReason = "您近期可能需要一些溫暖的撫慰。東方美人屬重發酵茶，需經小綠葉蟬叮咬（著涎）產生獨特的天然蜂蜜與熟果香。溫潤不傷胃的特性，配合自然的果蜜甜香，能為您帶來心理上的包覆感，穩定內在能量。";
-          cardImageName = "card_oriental.png";
-          guideHtml = `
-            <ul>
-              <li><strong>水溫：</strong>建議 85°C 溫熱水，避免高溫破壞蜜香。</li>
-              <li><strong>比例：</strong>茶水比約 1:50。</li>
-              <li><strong>時間：</strong>第一泡 40 秒，後續每泡增加 10-15 秒。</li>
-            </ul>`;
-        } else if (finalTeaKey === "dongding") {
-          teaResult = "凍頂烏龍茶 (南投鹿谷)";
-          teaReason = "您目前渴望一份安定與踏實的力量。傳統凍頂烏龍經過中度發酵與烘焙工藝，產生梅納反應，帶來堅果、焦糖般的溫暖香氣。醇厚的口感與焙火香，能從感官上傳遞穩定的訊號，適合需要建立生活秩序的您。";
-          cardImageName = "card_roastedoolong.png";
-          guideHtml = `
-            <ul>
-              <li><strong>水溫：</strong>建議 95°C - 100°C 沸水。</li>
-              <li><strong>比例：</strong>茶葉鋪滿壺底一層即可。</li>
-              <li><strong>時間：</strong>首泡 50 秒，後續每泡增加 15 秒，耐沖泡。</li>
-            </ul>`;
-        } else {
-          teaResult = "日月潭紅玉紅茶 (台茶18號)";
-          teaReason = "您正處於需要動力、準備迎接挑戰的狀態。紅玉紅茶為全發酵茶，擁有獨特的薄荷與肉桂香氣，被譽為「台灣香」。其豐富的層次與全發酵的溫暖特性，能提振精神，為您補充向前的動能。";
+        } else if (taste === "清爽解渴無負擔" && brew === "冰涼冷泡") {
+          teaResult = "特色茶枝";
+          teaReason = "茶枝部位咖啡因與單寧酸極低，富含天然游離糖。冷飲沖泡減少苦澀，展現純粹甘甜，是清爽無負擔的最佳選擇。";
+          cardImageName = "card_teastem.png";
+        } else if (expectation === "天然醇厚的甘甜蜜香" || taste === "濃郁夠味有層次") {
+          teaResult = "蜜香紅茶";
+          teaReason = "全發酵工藝帶來厚實醇和口感。受小綠葉蟬叮咬產生的芳樟醇，完美釋放天然蜜香，適合喜愛濃郁層次風味的您。";
           cardImageName = "card_blacktea.png";
-          guideHtml = `
-            <ul>
-              <li><strong>水溫：</strong>建議 90°C 熱水。</li>
-              <li><strong>比例：</strong>茶水比約 1:50。</li>
-              <li><strong>時間：</strong>第一泡 30 秒，避免久浸產生澀味。</li>
-            </ul>`;
+        } else if (roast === "帶有烘焙、焦糖的熟香") {
+          teaResult = "精焙烏龍";
+          teaReason = "經高溫烘焙產生梅納反應，轉化出溫潤的焙火香與焦糖香，茶湯醇厚溫和，適合鍾愛成熟風味的您。";
+          cardImageName = "card_roastedoolong.png";
+        } else {
+          teaResult = "經典清香烏龍";
+          teaReason = "保留豐富兒茶素與植物清新香氣，入喉生津止渴，是日常百搭的絕佳選擇。";
+          cardImageName = "card_oolong.png";
         }
 
-        // 動態生成專屬結果卡的網址
+        // 3. 動態產生職人級沖泡指示
+        var guideHtml = "";
+        
+        if (brew === "冰涼冷泡") {
+          guideHtml = `
+            <ul>
+              <li><strong>水溫：</strong>常溫水或冷水即可。</li>
+              <li><strong>比例：</strong>1g 茶葉對應 100ml 水。</li>
+              <li><strong>時間：</strong>置於冰箱冷藏 6-8 小時風味最佳。</li>
+            </ul>`;
+        } else {
+          // 針對原葉熱泡，套用客製化參數
+          if (format === "享受沖泡儀式 (原葉)") {
+            if (teaResult === "文山包種茶") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 95°C 熱水。</li>
+                  <li><strong>比例：</strong>茶水比約 1:50。</li>
+                  <li><strong>時間：</strong>第一泡 30 秒，第二泡 25 秒，第三泡 30 秒。</li>
+                </ul>`;
+            } else if (teaResult === "蜜香紅茶") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 85°C 熱水。</li>
+                  <li><strong>比例：</strong>茶水比約 1:50。</li>
+                  <li><strong>時間：</strong>第一泡 25 秒，第二泡 30 秒，第三泡 25 秒。</li>
+                </ul>`;
+            } else if (teaResult === "清香高山烏龍") {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>需使用 100°C 滾水。</li>
+                  <li><strong>比例：</strong>100cc 水量搭配 6-8g 茶葉。</li>
+                  <li><strong>時間：</strong>第一泡 120 秒，後續每次增加 60 秒。</li>
+                </ul>`;
+            } else {
+              guideHtml = `
+                <ul>
+                  <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
+                  <li><strong>比例：</strong>茶葉鋪滿壺底一層，約 1g 對應 30ml 水。</li>
+                  <li><strong>時間：</strong>首泡 40-50 秒，後續每泡增加 10-15 秒，可回沖 4-6 次。</li>
+                </ul>`;
+            }
+          } else {
+            // 熱泡茶包通用參數
+            guideHtml = `
+              <ul>
+                <li><strong>水溫：</strong>建議 90°C - 95°C 沸水。</li>
+                <li><strong>水量：</strong>注入約 250ml - 300ml 熱水。</li>
+                <li><strong>時間：</strong>靜置 3-5 分鐘後將茶包取出，避免久浸苦澀。</li>
+              </ul>`;
+          }
+        }
+
+        // 動態生成專屬結果卡的網址 (以當前目錄為準)
         var resultCardUrl = "./" + cardImageName;
 
-        // 若結果是坪林相關茶款，顯示品牌介紹
-        if (finalTeaKey === "pouchong") {
+        // 4. 動態加入「摺疊式 (Accordion)」品牌或茶款介紹
+        var brandIntroHtml = "";
+        if (teaResult === "文山包種茶" || teaResult === "蜜香紅茶" || teaResult === "特色茶枝") {
           brandIntroHtml = `
             <details class="brand-accordion">
-              <summary>🌿 創新創業社</summary>
+              <summary>🌿 鑫利發茶園 (Xin Li Fa Tea Garden)</summary>
               <div class="brand-accordion-content">
                 <div class="brand-section">
-                  <h5>【社團概述】</h5>
-                  <p>這是一個集結了無數創新點子與創業熱情的社群平台。致力將深厚產業知識融合數位化思維，將在地風土與台灣精品推向市場。</p>
+                  <h5>【品牌概述】</h5>
+                  <p>深耕於新北市坪林區水德里，是一座傳承超過半世紀歷史的在地茶園。茶園秉持「杯杯用心，杯杯精品」的製茶理念，將深厚的製茶技藝融合新世代企業管理與數位化思維，致力於將坪林風土與台灣精品茶推向國內外市場。</p>
                 </div>
+
                 <div class="brand-section">
-                  <h5>【願景與目標】</h5>
-                  <p>為每一個擁有創業夢想的年輕人提供交流、學習與合作的機會，攜手發掘台灣各個角落的美好故事與產品。</p>
+                  <h5>【核心特色與工藝】</h5>
+                  <p>主力生產正統文山包種茶（原葉及茶包）、蜜香紅茶（原葉及茶包）以及各式焙火特色茶款（如焙香茶穗茶包），並專注於茶葉烘焙控溫、發酵化學及茶葉副產物（如茶枝）的風味轉化。同時堅持保存並推廣瀕臨斷代的「傳統紙包茶」古法包裝技術，並落實衛福部食藥署登錄與產品合規檢驗，推動茶產業透明化與現代化轉型。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【國際榮譽與賽事】</h5>
+                  <p>旗下明星品項「焙香茶穗 (Roasted Cha-Sui)」榮獲 2026 英國 Great Taste Awards 國際美味大賽二星獎（2-STAR）殊榮，製茶工藝與風味品質獲得國際評審高度肯定。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【永續發展與社會責任】</h5>
+                  <p>堅持合適的耕作節奏，嚴格控管農藥使用且不使用除草劑，以實際行動守護坪林在地保育類野生動物「食蟹獴」的自然棲地，實踐生態共好。同時積極推動產學合作，支持大專院校學生進行茶文化與感官體驗等專題研究，為傳統茶產業注入年輕世代的創新動能。</p>
+                </div>
+              </div>
+            </details>
+          `;
+        } else if (teaResult === "清香高山烏龍") {
+          brandIntroHtml = `
+            <details class="brand-accordion">
+              <summary>🏔️ 台灣高山茶 (Taiwan High Mountain Tea) 概述</summary>
+              <div class="brand-accordion-content">
+                <div class="brand-section">
+                  <h5>【一、高山茶的海拔定義】</h5>
+                  <p>在台灣，「高山茶」指的是種植於海拔 1,000 公尺以上茶園的茶葉。這是一個「產地海拔」的概念，而非特定的茶樹品種。台灣知名的高山茶區包括阿里山（約 1,000~1,600 公尺）、杉林溪（約 1,600~1,800 公尺）以及梨山（約 1,800~2,600 公尺以上）。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【二、高山茶的風味特色】</h5>
+                  <p>高山環境具有低溫、日夜溫差大、午後雲霧繚繞（天然遮光）的特點。這使得茶樹生長緩慢，葉肉變得厚實，並能累積更多的胺基酸（甘甜味）與果膠質，同時降低兒茶素（苦澀味）。<br>因此，高山茶的普遍特色是：茶湯甘甜不苦澀、口感滑順有厚度（果膠感重）、且香氣清新高雅。為了保留這種自然原味，高山茶通常採用「輕發酵、輕烘焙（生茶）」的烏龍茶工藝。</p>
+                </div>
+
+                <div class="brand-section">
+                  <h5>【三、什麼是「高山氣（山頭氣）」？】</h5>
+                  <p>「高山氣」或常說的「山頭氣」，是指茶葉將該產區獨特的風土環境（土壤、微氣候、水質、周圍林相）轉化為茶湯中獨一無二的香氣與滋味。也就是那座山的「專屬身分證」。</p>
+                  <ul style="margin: 5px 0 0 20px; color: #444; font-size: 14px; padding-left: 0;">
+                    <li style="margin-bottom: 3px;"><strong>阿里山茶：</strong> 氣候溫和，山頭氣帶有溫柔清雅的蘭花香。</li>
+                    <li style="margin-bottom: 3px;"><strong>杉林溪茶：</strong> 周遭多杉木林，山頭氣帶有沉穩的木質香（冷杉氣韻）與強烈回甘。</li>
+                    <li style="margin-bottom: 0;"><strong>梨山茶：</strong> 海拔極高且冷，山頭氣帶有極致的冷冽高冷香與類似高山水果的甜味。</li>
+                  </ul>
+                  <p style="margin-top: 5px;">簡單來說，高山氣就是能讓您喝一口茶，就能感受到那座山獨特環境的味道。</p>
                 </div>
               </div>
             </details>
           `;
         }
 
-        // 4. 畫面切換：隱藏表單，顯示結果
+        // 5. 畫面切換：隱藏表單，顯示結果卡片與專屬圖片
         form.style.display = "none";
         mainTitle.innerText = name + " 的專屬茶單";
         subTitle.style.display = "none";
@@ -566,6 +469,7 @@
             <h3 style="color: var(--ink-green); font-size: 28px; margin: 10px 0;">${teaResult}</h3>
             <div style="width: 40px; height: 2px; background-color: var(--tea-gold); margin: 0 auto 20px;"></div>
             
+            <!-- 動態顯示專屬小卡與下載按鈕 -->
             <div class="result-card-container">
               <img src="${resultCardUrl}" alt="${teaResult} 專屬卡片" onerror="this.style.display='none'">
               <br>
@@ -573,9 +477,10 @@
             </div>
             
             <p style="text-align: justify; line-height: 1.8; color: #444; margin-bottom: 25px; padding: 20px; background-color: rgba(176, 155, 113, 0.05); border-left: 4px solid var(--tea-gold);">
-              <strong>【客觀狀態分析】</strong><br>${teaReason}<br>
-              <span style="font-size: 12px; color: #888; display: block; margin-top: 8px;">*風味描述皆參考「農業部茶及飲料作物改良場 (TTES)」之分類標準。</span>
+              ${teaReason}
             </p>
+            
+            <p style="color: #666; font-size: 15px; margin-bottom: 30px;">推薦情境搭配：<strong>${format}</strong></p>
             
             <hr style="border: 0; border-top: 1px dashed var(--border-gray); margin: 30px 0;">
             
@@ -584,18 +489,32 @@
               ${guideHtml}
             </div>
 
+            <!-- 動態摺疊品牌介紹區塊 -->
             ${brandIntroHtml}
             
+            <!-- 加入寄信狀態提示 -->
             <p id="mailStatus" style="color: #888; font-size: 13px; margin-top: 20px; margin-bottom: 10px;">⏳ 正在將茶單發送至您的信箱...</p>
             
+            <!-- 購買與社群連結按鈕群 -->
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
-              <a href="https://www.instagram.com/ie20.24?utm_source=ig_web_button_share_sheet&igsi=ZDNlZDc0MzIxNw==" target="_blank" class="action-btn-outline">💬 追蹤創新創業社社群</a>
+              <!-- 填入您的商城網址 -->
+              <a href="https://myship.7-11.com.tw/general/detail/GM2508294110267" target="_blank" class="action-btn">🛒 立即選購此茶款</a>
+              <!-- 填入您的 LINE OA 或 IG 網址 -->
+              <a href="https://www.instagram.com/pingling_tea_eaters/" target="_blank" class="action-btn-outline">💬 追蹤嗜茶人社群</a>
+              
+              <!-- 重新測驗 -->
               <button onclick="location.reload()" style="background-color: transparent; color: #888; border: none; font-size: 14px; margin-top: 10px; cursor: pointer; text-decoration: underline; font-family: 'Noto Serif TC', serif;">重新品茗測驗</button>
+            </div>
+            
+            <div class="manufacturer-info">
+              <strong>製造商資訊</strong><br>
+              鑫利發茶園<br>
+              品牌：嗜茶人
             </div>
           </div>
         `;
 
-        // 5. 透過 fetch 在背景將資料傳送給 GAS (保留您原有的資料欄位以便後端正常運作)
+        // 6. 透過 fetch 在背景將資料傳送給 GAS 執行寄信與資料庫寫入
         var urlEncodedData = new URLSearchParams({
           name: name,
           email: emailInput,
@@ -610,11 +529,15 @@
 
         fetch(API_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded" 
+          },
           body: urlEncodedData
         })
         .then(response => {
-          if (!response.ok) throw new Error('網路回應異常');
+          if (!response.ok) {
+            throw new Error('網路回應異常');
+          }
           return response.json(); 
         })
         .then(data => {
