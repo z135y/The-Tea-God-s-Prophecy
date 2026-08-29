@@ -62,6 +62,10 @@
         z-index: 2;
       }
       
+      .brand-watermark-logo {
+        display: none; /* 完全隱藏原本的鑫利發茶園圓形浮水印 */
+      }
+      
       h2 { text-align: center; color: var(--ink-green); font-size: 28px; margin-top: 10px; margin-bottom: 15px; letter-spacing: 3px; font-weight: 600; }
       .subtitle { text-align: center; font-size: 15px; color: #666; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; transition: 0.3s; }
       
@@ -186,6 +190,8 @@
 
       @media (max-width: 900px) { 
         .tea-master-illustration { opacity: 0.15; left: -50px; } 
+        /* 確保手機版也不會顯示浮水印 */
+        .brand-watermark-logo { display: none; }
       }
       @media (max-width: 600px) { .container { padding: 40px 25px; } .stamp { top: 20px; right: 20px; width: 28px; height: 95px; font-size: 14px; } }
     </style>
@@ -219,6 +225,8 @@
     </button>
 
     <div class="container">
+      <!-- 雖然保留了 img 標籤，但透過 CSS 將其隱藏 -->
+      <img src="./brand_logo.png" class="brand-watermark-logo" alt="品牌浮水印">
       
       <div class="stamp" id="stampMarker">創新創業社</div>
       <h2 id="mainTitle">尋找專屬茶韻</h2>
